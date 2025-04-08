@@ -1,16 +1,21 @@
 package org.zerock.myapp.config;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 //@EnableWebSecurity //커스텀 화면 구성시
 public class SecurityConfig {
-	/*
-    //@Bean
+    
+	
+	@Bean
     public PasswordEncoder passwordEncoder() {return new BCryptPasswordEncoder();}
     
     
     
+    /*
     //@Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
