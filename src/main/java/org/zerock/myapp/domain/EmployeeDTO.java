@@ -1,6 +1,7 @@
 package org.zerock.myapp.domain;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Vector;
@@ -38,6 +39,7 @@ private String empno; // 사번
 	
 	private Date crtDate; // 등록일
 	private Date udtDate; // 수정일
+	
 	
 	// join
 	private List<Board> Board = new Vector(); // 게시판 작성자

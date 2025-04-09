@@ -3,6 +3,7 @@ package org.zerock.myapp.entity;
 import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Vector;
@@ -77,8 +78,14 @@ public class Employee implements Serializable {
 	@Column(nullable=false)
 	private Boolean enabled = true; // 활성화상태(1=유효,0=삭제)
 	
-	@Column(nullable = false)
-	private Integer empSeq; // 사원 시퀀스(보여지는 속성은 아님)
+	
+	// 사번 생성 ( 테스트중 )
+	private String employeeCode;
+//	private LocalDate joinDate; // date : 날짜 + 시간 / localDate : 날짜만 다룸 ( java8 + )
+//	private String role; // E = 사원 , C=  CEO, H = 인사담당자, A = 시스템관리자
+	
+	
+	
 	
 	
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
