@@ -24,7 +24,8 @@ import lombok.Data;
 
 @Data
 public class EmployeeDTO {
-private String empno; // 사번
+
+	private String empno; // 사번
 	
 	private String name; // 사원명
 	private Integer position; // 직급(팀원=1, 팀장=2, 부서장=3, CEO=4, 인사담당자=5, 시스템관리자=9)
@@ -35,7 +36,7 @@ private String empno; // 사번
 	private String address; // 주소
 	private BigDecimal zipCode; // 우편번호
 	private Boolean enabled = true; // 활성화상태(1=유효,0=삭제)
-	private Integer empSeq; // 사원 시퀀스(보여지는 속성은 아님)
+	
 	
 	private Date crtDate; // 등록일
 	private Date udtDate; // 수정일
@@ -45,13 +46,13 @@ private String empno; // 사번
 	private List<Board> Board = new Vector(); // 게시판 작성자
 	private List<ChatEmployee> ChatEmployees = new Vector(); // 채팅방을 사용하는 사원
 	private Department Department; // 부서 ID
-	private List<File> Files = new Vector(); // 프로필사진
 	private List<Message> Messages = new Vector(); // 메시지 작성자
 	private List<Project> Projects1 = new Vector(); // 만든사람 id
 	private List<Project> Projects2 = new Vector(); // 담당자 id
 	private List<Work> Works = new Vector(); // 지시자
 	private List<WorkEmployee> WorkEmployees = new Vector(); // 담당자
 	
+	private List<File> Files = new Vector(); // 프로필사진
 	private String searchWord; // 검색항목
 	private String searchText; // 검색문
 	

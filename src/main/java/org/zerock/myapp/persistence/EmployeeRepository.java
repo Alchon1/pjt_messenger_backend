@@ -13,4 +13,6 @@ import org.zerock.myapp.entity.Employee;
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, String>, JpaSpecificationExecutor<Employee> {
 
+;;
+	
 } // end interface

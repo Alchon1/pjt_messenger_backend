@@ -1,14 +1,14 @@
 package org.zerock.myapp.service;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.interfaces.DecodedJWT;
-import com.auth0.jwt.interfaces.JWTVerifier;
-
 import java.util.Date;
 
 import org.zerock.myapp.entity.Employee;
 import org.zerock.myapp.util.RoleUtil;
+
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.interfaces.DecodedJWT;
+import com.auth0.jwt.interfaces.JWTVerifier;
 
 /**
  * JWT 토큰의 생성 및 검증 기능을 담당하는 유틸리티 클래스
@@ -30,9 +30,9 @@ public class JwtProvider {
         Date now = new Date();
         Date expiresAt = new Date(now.getTime() + 3600 * 1000); // 1시간 후 만료
 
-        String role = RoleUtil.mapPositionToRole();
+        String role = RoleUtil.mapPositionToRole(Employee.class);
         
-        return 
+        
         		String token = JWT.create()
                 .withSubject(subject) // 사용자 식별자 설정
                 .withIssuer("yourAppName") // 토큰 발급자 정보
@@ -41,6 +41,7 @@ public class JwtProvider {
                 .withClaim("role", role) // 추가 클레임 설정 (예: 권한 정보)
                 .sign(algorithm); // 알고리즘과 비밀키로 서명
         		
+        	return token;
     }
 
     /**
