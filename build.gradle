@@ -75,6 +75,10 @@ dependencies {
 	// Spring Security
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	testImplementation 'org.springframework.security:spring-security-test'
+	
+	// Java Web Token
+	implementation("com.auth0:java-jwt:4.4.0")
+	
 }
 
 tasks.named('test') {
