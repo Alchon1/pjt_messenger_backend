@@ -3,6 +3,7 @@ package org.zerock.myapp.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,8 +13,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.zerock.myapp.domain.ChatDTO;
+import org.zerock.myapp.domain.ChatInitResponseDTO;
 import org.zerock.myapp.entity.Chat;
+import org.zerock.myapp.entity.Department;
+import org.zerock.myapp.entity.Employee;
+import org.zerock.myapp.entity.Project;
 import org.zerock.myapp.service.ChatService;
+import org.zerock.myapp.service.DepartmentService;
+import org.zerock.myapp.service.EmployeeService;
+import org.zerock.myapp.service.ProjectService;
 
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,43 +34,76 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @NoArgsConstructor
 
-@RequestMapping("/chat")
+//@RequestMapping("/chat")
+@RequestMapping("/api")
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 public class ChatController {
 		
-	@Autowired private ChatService ChatService;
+	@Autowired private ChatService chatService;
+	@Autowired private EmployeeService empService;
+	@Autowired private ProjectService pjService;
+	@Autowired private DepartmentService dtService;
 	
+	
+	// 리스트
 	@GetMapping
-	List<Chat> list() { // 리스트
+	List<Chat> list() { 
 		log.debug("list() invoked.");
 		
-		return ChatService.findAllList();
+		return chatService.findAllList();
 	} // list
+
 	
+	// 불러오기 실험
+
+//	@GetMapping("/init")
+	@GetMapping("/selectPj")
+	public ChatInitResponseDTO getEmployeesAndProjects() {
+		
+		List<Employee> empList=empService.getAllList();
+		List<Project> pjList=pjService.getAllList();
+		List<Department> dtList=dtService.getAllList();
+		
+		return new ChatInitResponseDTO(empList,pjList, dtList);
+	
+//	public List<Project> getProjectList(){
+//		return pjService.getAllList();
+	
+	}
+
+	
+	// 등록 처리
 	@PostMapping
-	Chat register(@RequestBody ChatDTO dto) { // 등록 처리
+	Chat register(@RequestBody ChatDTO dto) { 
 		log.debug("register() invoked.");
 		
-		return ChatService.createRoom(dto);
+		
+		
+		return chatService.createRoom(dto);
 	} // register
 	
+	
+	// 세부 조회
 	@GetMapping(path = "/{id}")
-	Chat read( // 세부 조회
+	Chat read( 
 			@PathVariable Long id
 			) {
 		log.debug("read({}) invoked.",id);
 		
-		return ChatService.getById(id);
+		return chatService.getById(id);
 	} // read
 	
+	
+	// 수정 처리
 	@PutMapping(path = "/{id}")
-	Boolean update( // 수정 처리
+	Boolean update(@RequestBody
 			ChatDTO dto,
 			@PathVariable Long id
 			) { 
 		log.debug("update({}) invoked.",id);
 		
-		return ChatService.update(dto);
+		return chatService.update(dto);
 	} // update
 	
 	@DeleteMapping(path = "/{id}")
@@ -71,7 +112,7 @@ public class ChatController {
 			) {
 		log.debug("delete({}) invoked.",id);
 		
-		return ChatService.deleteById(id);
+		return chatService.deleteById(id);
 	} // delete
 	
 

@@ -12,6 +12,7 @@ import org.hibernate.annotations.SourceType;
 import org.hibernate.generator.EventType;
 import org.zerock.myapp.util.BooleanToIntegerConverter;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Column;
@@ -109,6 +110,7 @@ public class Employee implements Serializable {
 
 	@ToString.Exclude
 	@OneToMany(mappedBy="Employee1")
+    @JsonIgnore
 	private List<Project> Projects1 = new Vector<>(); // 만든사람 id
 
 	@ToString.Exclude

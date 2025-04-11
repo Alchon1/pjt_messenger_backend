@@ -27,8 +27,9 @@ public class ChatDTO {
 
 	// join
 	private Project Project; // 프로젝트 뱃지 id
-	private List<ChatEmployee> ChatEmployees = new Vector<>(); //  작성자 id 
+	private List<ChatEmployee> ChatEmployees = new Vector<>(); //  작성자 empno
 	private List<Message> Messages = new Vector<>(); // 메시지 id
+	private List<Project> ChatProject= new Vector<>(); //프로젝트 id
 	
 	private String searchWord; // 검색 항목
 	private String searchText; // 검색문

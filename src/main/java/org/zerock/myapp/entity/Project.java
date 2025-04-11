@@ -11,6 +11,7 @@ import org.hibernate.annotations.SourceType;
 import org.hibernate.generator.EventType;
 import org.zerock.myapp.util.BooleanToIntegerConverter;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Column;
@@ -79,13 +80,16 @@ public class Project implements Serializable {
 	@ToString.Exclude
 	@OneToMany(mappedBy="Project")
 	private List<Chat> Chats = new Vector<>(); // 프로젝트뱃지
-
+	
+	@ToString.Exclude
 	@ManyToOne
 	@JoinColumn(name="CREATOR")
 	private Employee Employee1; // 생성자 ID
-
+	
+	@ToString.Exclude
 	@ManyToOne
 	@JoinColumn(name="MANAGER")
+	@JsonIgnore
 	private Employee Employee2; // 담당자 ID
 
 
