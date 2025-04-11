@@ -60,9 +60,9 @@ public class LoginServiceImpl {
 		try {
 		Employee employee = new Employee();
 		// 사번 생성 로직2 ( 테스트 중 )
-		LocalDate now = LocalDate.now();
-		String rolePrefix = getRolePrefixFromPosition(dto.getPosition());
-		String empno = generateEmpno(rolePrefix, now);
+//		LocalDate now = LocalDate.now();
+//		String rolePrefix = getRolePrefixFromPosition(dto.getPosition());
+//		String empno = generateEmpno(rolePrefix, now);
 		
 		employee.setEmpno(dto.getEmpno()); // 사번
 		employee.setName(dto.getName()); // 사원 이름 _ front
@@ -103,27 +103,27 @@ public class LoginServiceImpl {
 	
 	// ================= 사번 생성 로직2 ( 테스트 중 ) =======================
 	
-	private String generateEmpno(String rolePrefix, LocalDate date) {
-		String year = String.format("%02d", date.getYear() % 100); // 년도 뽑아내기
-		String month = String.format("%02d", date.getMonthValue()); // 월 뽑아내기
-		String prefix = rolePrefix + year + month;
-		
-		int count = loginRepository.countByEmployeeCodeStartingWith(prefix);
-		String seq = String.format("%03d", count + 1);
-		
-		return prefix + seq;
-		
-	}
-	
-	private String getRolePrefixFromPosition(Integer position) {
-		return switch (position) { // 숫자에 따라 알파벳 부여
-		case 1, 2, 3 -> "E";
-		case 4 -> "C";
-		case 5 -> "H";
-		case 9 -> "A";
-		default -> throw new IllegalArgumentException("Invalid position: " + position);
-		};
-	}
+//	private String generateEmpno(String rolePrefix, LocalDate date) {
+//		String year = String.format("%02d", date.getYear() % 100); // 년도 뽑아내기
+//		String month = String.format("%02d", date.getMonthValue()); // 월 뽑아내기
+//		String prefix = rolePrefix + year + month;
+//		
+//		int count = loginRepository.countByEmployeeCodeStartingWith(prefix);
+//		String seq = String.format("%03d", count + 1);
+//		
+//		return prefix + seq;
+//		
+//	}
+//	
+//	private String getRolePrefixFromPosition(Integer position) {
+//		return switch (position) { // 숫자에 따라 알파벳 부여
+//		case 1, 2, 3 -> "E";
+//		case 4 -> "C";
+//		case 5 -> "H";
+//		case 9 -> "A";
+//		default -> throw new IllegalArgumentException("Invalid position: " + position);
+//		};
+//	}
 	
 	
 	

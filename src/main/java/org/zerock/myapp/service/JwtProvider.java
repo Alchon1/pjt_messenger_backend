@@ -2,6 +2,7 @@ package org.zerock.myapp.service;
 
 import java.util.Date;
 
+import org.springframework.stereotype.Service;
 import org.zerock.myapp.entity.Employee;
 import org.zerock.myapp.util.RoleUtil;
 
@@ -13,6 +14,8 @@ import com.auth0.jwt.interfaces.JWTVerifier;
 /**
  * JWT 토큰의 생성 및 검증 기능을 담당하는 유틸리티 클래스
  */
+
+@Service
 public class JwtProvider {
 
     // 비밀키: 실제 서비스에서는 환경 변수나 외부 설정을 통해 관리할 것
@@ -26,11 +29,12 @@ public class JwtProvider {
      * @param subject 사용자 식별자 (ex. username)
      * @return JWT 토큰 문자열
      */
-    public static String generateToken(String subject) {
+    public static String generateToken(String subject , Employee employee) {
         Date now = new Date();
         Date expiresAt = new Date(now.getTime() + 3600 * 1000); // 1시간 후 만료
 
-        String role = RoleUtil.mapPositionToRole(Employee.class);
+        int position = employee.getPosition(); // 혹은 적절한 값을 할당
+        String role = RoleUtil.mapPositionToRole(position);
         
         
         		String token = JWT.create()

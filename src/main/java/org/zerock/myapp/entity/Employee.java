@@ -80,7 +80,7 @@ public class Employee implements Serializable {
 	
 	
 	// 사번 생성 ( 테스트중 )
-	private String employeeCode;
+//	private String employeeCode;
 //	private LocalDate joinDate; // date : 날짜 + 시간 / localDate : 날짜만 다룸 ( java8 + )
 //	private String role; // E = 사원 , C=  CEO, H = 인사담당자, A = 시스템관리자
 	
