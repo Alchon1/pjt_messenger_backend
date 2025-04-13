@@ -59,11 +59,11 @@ public class BoardServiceImpl implements BoardService {
 	} // create
 	
 	@Override
-	public Board getById(String id) {	// 단일 조회
+	public Board getById(Long id) {	// 단일 조회
 		log.debug("BoardServiceImpl -- getById({}) invoked", id);
 		
 		//값이 존재하면 반환하고, 없으면 new Course()와 같은 기본값을 반환합니다.
-		Board data = new Board();//dao.findById(id).orElse(new Board());
+		Board data = dao.findById(id).orElse(new Board());
 		
 		return data;
 	} // getById

@@ -63,7 +63,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		log.debug("EmployeeServiceImpl -- getById({}) invoked", id);
 		
 		//값이 존재하면 반환하고, 없으면 new Course()와 같은 기본값을 반환합니다.
-		Employee data = new Employee();//dao.findById(id).orElse(new Employee());
+		Employee data = dao.findById(id).orElse(new Employee());
 		
 		return data;
 	} // getById

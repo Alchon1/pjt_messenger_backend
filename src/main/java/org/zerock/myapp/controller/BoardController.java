@@ -1,5 +1,8 @@
 package org.zerock.myapp.controller;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -7,6 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.zerock.myapp.entity.Board;
+import org.zerock.myapp.service.BoardService;
 
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,11 +28,15 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 public class BoardController {
 	
+	@Autowired BoardService boardService;
+	
 	@GetMapping
-	String list() { // 리스트
+	List<Board> list() { // 리스트
 		log.debug("list() invoked.");
 		
-		return "list";
+		List<Board> list = boardService.getAllList();
+		
+		return list;
 	} // list
 	
 	@PostMapping
@@ -37,13 +46,15 @@ public class BoardController {
 		return "register";
 	} // register
 	
+	
 	@GetMapping(path = "/{id}")
-	String read( // 세부 조회
-			@PathVariable Long id
-			) {
+	Board read( // 세부 조회
+			@PathVariable Long id ) {
 		log.debug("read({}) invoked.",id);
 		
-		return "read";
+		Board read = boardService.getById(id);
+		
+		return read;
 	} // read
 	
 	@PutMapping(path = "/{id}")

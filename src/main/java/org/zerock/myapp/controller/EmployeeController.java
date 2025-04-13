@@ -41,7 +41,9 @@ public class EmployeeController {
 	List<Employee> list() { // 리스트
 		log.debug("list() invoked.");
 		
-		return employeeService.getAllList();
+		List<Employee> list = employeeService.getAllList();
+		
+		return list;
 	} // list
 	
 	@PostMapping("/register")
@@ -54,12 +56,13 @@ public class EmployeeController {
 	 }
 	
 	@GetMapping(path = "/{id}")
-	String read( // 세부 조회
-			@PathVariable Long id
-			) {
+	Employee read( // 세부 조회
+			@PathVariable String id ) {
 		log.debug("read({}) invoked.",id);
 		
-		return "read";
+		Employee employee = employeeService.getById(id);
+		
+		return employee;
 	} // read
 	
 	@PutMapping(path = "/{id}")

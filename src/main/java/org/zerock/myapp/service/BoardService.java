@@ -11,7 +11,7 @@ public interface BoardService {
 	public abstract List<Board> getSearchList(BoardDTO dto); // 전체 조회(검색)
 	
 	public abstract Board create(BoardDTO dto);    	// 생성 처리
-	public abstract Board getById(String id);    // 단일 조회
+	public abstract Board getById(Long id);    // 단일 조회
 	public abstract Boolean update(BoardDTO dto);    	// 수정 처리
 	public abstract Boolean deleteById(String id);// 삭제 처리
 	

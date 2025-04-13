@@ -63,12 +63,12 @@ public class Board implements Serializable {
 	@Column(nullable=false)
 	private Boolean enabled = true; // 활성화상태(1=유효,0=삭제)
 
-	
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Seoul")
 	@CurrentTimestamp(event = EventType.INSERT, source = SourceType.DB)
 	@Column(name="CRT_DATE", nullable = false)
 	private Date crtDate; // 생성일
 
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Seoul")
 	@CurrentTimestamp(event = EventType.UPDATE, source = SourceType.DB)
 	@Column(name="UDT_DATE")
 	private Date udtDate; // 수정일
