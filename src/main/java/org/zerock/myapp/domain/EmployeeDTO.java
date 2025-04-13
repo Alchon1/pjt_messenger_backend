@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.zerock.myapp.entity.Board;
 import org.zerock.myapp.entity.ChatEmployee;
 import org.zerock.myapp.entity.Department;
@@ -37,8 +38,9 @@ public class EmployeeDTO {
 	private BigDecimal zipCode; // 우편번호
 	private Boolean enabled = true; // 활성화상태(1=유효,0=삭제)
 	
-	
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date crtDate; // 등록일
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date udtDate; // 수정일
 	
 	

@@ -1,6 +1,8 @@
 package org.zerock.myapp.service;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.Optional;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -60,10 +62,9 @@ public class LoginServiceImpl {
 		try {
 		Employee employee = new Employee();
 		// 사번 생성 로직2 ( 테스트 중 )
-//		LocalDate now = LocalDate.now();
-//		String rolePrefix = getRolePrefixFromPosition(dto.getPosition());
-//		String empno = generateEmpno(rolePrefix, now);
-		
+        String prefix = getRolePrefixFromPosition(dto.getPosition());
+        String empno = generateEmpno(prefix, dto.getCrtDate());
+	
 		employee.setEmpno(dto.getEmpno()); // 사번
 		employee.setName(dto.getName()); // 사원 이름 _ front
 		employee.setPosition(dto.getPosition()); // 직급 _ front
@@ -103,27 +104,34 @@ public class LoginServiceImpl {
 	
 	// ================= 사번 생성 로직2 ( 테스트 중 ) =======================
 	
-//	private String generateEmpno(String rolePrefix, LocalDate date) {
-//		String year = String.format("%02d", date.getYear() % 100); // 년도 뽑아내기
-//		String month = String.format("%02d", date.getMonthValue()); // 월 뽑아내기
-//		String prefix = rolePrefix + year + month;
-//		
-//		int count = loginRepository.countByEmployeeCodeStartingWith(prefix);
-//		String seq = String.format("%03d", count + 1);
-//		
-//		return prefix + seq;
-//		
-//	}
-//	
-//	private String getRolePrefixFromPosition(Integer position) {
-//		return switch (position) { // 숫자에 따라 알파벳 부여
-//		case 1, 2, 3 -> "E";
-//		case 4 -> "C";
-//		case 5 -> "H";
-//		case 9 -> "A";
-//		default -> throw new IllegalArgumentException("Invalid position: " + position);
-//		};
-//	}
+	// 직급에 따라 알파벳 반환
+	private String getRolePrefixFromPosition(Integer position) {
+	    return switch (position) {
+	        case 1 -> "E"; // 사원
+	        case 2 -> "E"; // 팀장
+	        case 3 -> "E"; // 부서장
+	        case 4 -> "C"; // CEO
+	        case 5 -> "H"; // 인사관리자
+	        case 9 -> "A"; // 시스템관리자
+	        default -> throw new IllegalArgumentException("알 수 없는 직급입니다.");
+	    };
+	}
+
+	// 날짜와 prefix로 사번 생성
+	private String generateEmpno(String rolePrefix, Date date) {
+	    LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+	    String year = String.valueOf(localDate.getYear()).substring(2);
+	    String month = String.format("%02d", localDate.getMonthValue());
+
+	    int sequence = (int)(Math.random() * 900 + 100); // 현재 방식은 랜덤 sequence 방식이라 수정 필요. 
+	    
+	    
+	    // 달이 바뀌면 sequence 초기화
+	    // 랜덤 숫자가 아닌 순서대로 
+	    // 갯수로 하면 임의로 데이터를 넣는 순간 충돌 날 수 있음.
+	    
+	    return rolePrefix + year + month + sequence;
+	}
 	
 	
 	
