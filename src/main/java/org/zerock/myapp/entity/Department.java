@@ -66,17 +66,18 @@ public class Department implements Serializable {
 	@Column(name="UDT_DATE")
 	private Date udtDate;
 
+
 	
 	// join
-//	@ToString.Exclude
-//	@ManyToOne
-//	@JoinColumn(name="P_DEPT_ID")
-//	private Department Department; // 상위부서
+	@ToString.Exclude
+	@ManyToOne
+	@JoinColumn(name="P_DEPT_ID")
+	private Department Department; // 상위부서
 
-//	@ToString.Exclude
-//	@OneToMany(mappedBy="Department")
-//	@JsonIgnore
-//	private List<Department> Departments = new Vector<>(); // 부서
+	@ToString.Exclude
+	@OneToMany(mappedBy="Department")
+	@JsonIgnore
+	private List<Department> Departments = new Vector<>(); // 부서
 //
 //	
 //	@ToString.Exclude
