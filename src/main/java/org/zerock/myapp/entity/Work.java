@@ -86,23 +86,23 @@ public class Work implements Serializable {
 	@JoinColumn(name="EMPNO")
 	private Employee Employee; // 지시자 id
 
-	@ToString.Exclude
-	@OneToMany(mappedBy="Work")
-	private List<WorkEmployee> WorkEmployees = new Vector<>(); // 업무-사원 테이블
+//	@ToString.Exclude
+//	@OneToMany(mappedBy="Work")
+//	private List<WorkEmployee> WorkEmployees = new Vector<>(); // 업무-사원 테이블
 
 
-	public WorkEmployee addWorkEmployee(WorkEmployee WorkEmployee) {
-		getWorkEmployees().add(WorkEmployee);
-		WorkEmployee.setWork(this);
+//	public WorkEmployee addWorkEmployee(WorkEmployee WorkEmployee) {
+//		getWorkEmployees().add(WorkEmployee);
+//		WorkEmployee.setWork(this);
+//
+//		return WorkEmployee;
+//	} // addWorkEmployee
 
-		return WorkEmployee;
-	} // addWorkEmployee
-
-	public WorkEmployee removeWorkEmployee(WorkEmployee WorkEmployee) {
-		getWorkEmployees().remove(WorkEmployee);
-		WorkEmployee.setWork(null);
-
-		return WorkEmployee;
-	} // removeWorkEmployee
+//	public WorkEmployee removeWorkEmployee(WorkEmployee WorkEmployee) {
+//		getWorkEmployees().remove(WorkEmployee);
+//		WorkEmployee.setWork(null);
+//
+//		return WorkEmployee;
+//	} // removeWorkEmployee
 
 } // end class

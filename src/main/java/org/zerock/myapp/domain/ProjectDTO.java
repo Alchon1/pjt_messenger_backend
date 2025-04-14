@@ -30,10 +30,13 @@ public class ProjectDTO {
 
 	// join
 	private List<Chat> Chats = new Vector<>(); // 프로젝트뱃지
-	private Employee Employee1; // 생성자 ID
-	private Employee Employee2; // 담당자 ID
+	private Employee pjtCreator; // 생성자 객체
+	private Employee pjtManager; // 담당자 객체
 	
 	private String searchWord; // 검색항목
 	private String searchText; // 검색문
+	
+	private String creatorEmpno;// 생성자 id
+	private String managerEmpno;// 담당자 id
 	
 } // end class

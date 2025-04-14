@@ -3,8 +3,6 @@ package org.zerock.myapp.entity;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
-import java.util.Vector;
 
 import org.hibernate.annotations.CurrentTimestamp;
 import org.hibernate.annotations.SourceType;
@@ -19,12 +17,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
-import lombok.ToString;
 
 
 @Data
@@ -64,48 +58,51 @@ public class Department implements Serializable {
 	@CurrentTimestamp(event = EventType.UPDATE, source = SourceType.DB)
 	@Column(name="UDT_DATE")
 	private Date udtDate;
+	
+	@Column(name="P_DEPT_ID")
+	private Long pDeptId; // 상위부서
 
 	
 	// join
-	@ManyToOne
-	@JoinColumn(name="P_DEPT_ID")
-	private Department Department; // 상위부서
+//	@ManyToOne
+//	@JoinColumn(name="P_DEPT_ID")
+//	private Department Department; // 상위부서
+//
+//	@ToString.Exclude
+//	@OneToMany(mappedBy="Department")
+//	private List<Department> Departments = new Vector<>(); // 부서
 
-	@ToString.Exclude
-	@OneToMany(mappedBy="Department")
-	private List<Department> Departments = new Vector<>(); // 부서
-
-	@ToString.Exclude
-	@OneToMany(mappedBy="Department")
-	private List<Employee> Employees = new Vector<>(); // 사원
+//	@ToString.Exclude
+//	@OneToMany(mappedBy="Department")
+//	private List<Employee> Employees = new Vector<>(); // 사원
 
 
-	public Department addDepartment(Department Department) {
-		getDepartments().add(Department);
-		Department.setDepartment(this);
+//	public Department addDepartment(Department Department) {
+//		getDepartments().add(Department);
+//		Department.setDepartment(this);
+//
+//		return Department;
+//	} // addDepartment
+//
+//	public Department removeDepartment(Department Department) {
+//		getDepartments().remove(Department);
+//		Department.setDepartment(null);
+//
+//		return Department;
+//	} // removeDepartment
 
-		return Department;
-	} // addDepartment
-
-	public Department removeDepartment(Department Department) {
-		getDepartments().remove(Department);
-		Department.setDepartment(null);
-
-		return Department;
-	} // removeDepartment
-
-	public Employee addEmployee(Employee Employee) {
-		getEmployees().add(Employee);
-		Employee.setDepartment(this);
-
-		return Employee;
-	} // addEmployee
-
-	public Employee removeEmployee(Employee Employee) {
-		getEmployees().remove(Employee);
-		Employee.setDepartment(null);
-
-		return Employee;
-	} // removeEmployee
+//	public Employee addEmployee(Employee Employee) {
+//		getEmployees().add(Employee);
+//		Employee.setDepartment(this);
+//
+//		return Employee;
+//	} // addEmployee
+//
+//	public Employee removeEmployee(Employee Employee) {
+//		getEmployees().remove(Employee);
+//		Employee.setDepartment(null);
+//
+//		return Employee;
+//	} // removeEmployee
 
 } // end class
