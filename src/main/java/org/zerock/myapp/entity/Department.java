@@ -68,49 +68,49 @@ public class Department implements Serializable {
 
 	
 	// join
-	@ToString.Exclude
-	@ManyToOne
-	@JoinColumn(name="P_DEPT_ID")
-	private Department Department; // 상위부서
+//	@ToString.Exclude
+//	@ManyToOne
+//	@JoinColumn(name="P_DEPT_ID")
+//	private Department Department; // 상위부서
 
-	@ToString.Exclude
-	@OneToMany(mappedBy="Department")
-	@JsonIgnore
-	private List<Department> Departments = new Vector<>(); // 부서
+//	@ToString.Exclude
+//	@OneToMany(mappedBy="Department")
+//	@JsonIgnore
+//	private List<Department> Departments = new Vector<>(); // 부서
+//
+//	
+//	@ToString.Exclude
+//	@OneToMany(mappedBy="Department")
+//	@JsonIgnore
+//	private List<Employee> Employees = new Vector<>(); // 사원
 
-	
-	@ToString.Exclude
-	@OneToMany(mappedBy="Department")
-	@JsonIgnore
-	private List<Employee> Employees = new Vector<>(); // 사원
 
-
-	public Department addDepartment(Department Department) {
-		getDepartments().add(Department);
-		Department.setDepartment(this);
-
-		return Department;
-	} // addDepartment
-
-	public Department removeDepartment(Department Department) {
-		getDepartments().remove(Department);
-		Department.setDepartment(null);
-
-		return Department;
-	} // removeDepartment
-
-	public Employee addEmployee(Employee Employee) {
-		getEmployees().add(Employee);
-		Employee.setDepartment(this);
-
-		return Employee;
-	} // addEmployee
-
-	public Employee removeEmployee(Employee Employee) {
-		getEmployees().remove(Employee);
-		Employee.setDepartment(null);
-
-		return Employee;
-	} // removeEmployee
+//	public Department addDepartment(Department Department) {
+//		getDepartments().add(Department);
+//		Department.setDepartment(this);
+//
+//		return Department;
+//	} // addDepartment
+//
+//	public Department removeDepartment(Department Department) {
+//		getDepartments().remove(Department);
+//		Department.setDepartment(null);
+//
+//		return Department;
+//	} // removeDepartment
+//
+//	public Employee addEmployee(Employee Employee) {
+//		getEmployees().add(Employee);
+//		Employee.setDepartment(this);
+//
+//		return Employee;
+//	} // addEmployee
+//
+//	public Employee removeEmployee(Employee Employee) {
+//		getEmployees().remove(Employee);
+//		Employee.setDepartment(null);
+//
+//		return Employee;
+//	} // removeEmployee
 
 } // end class

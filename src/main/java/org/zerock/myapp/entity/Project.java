@@ -77,10 +77,10 @@ public class Project implements Serializable {
 
 	
 	// join
-	@ToString.Exclude
-	@OneToMany(mappedBy="Project")
-	private List<Chat> Chats = new Vector<>(); // 프로젝트뱃지
-	
+//	@ToString.Exclude
+//	@OneToMany(mappedBy="Project")
+//	private List<Chat> Chats = new Vector<>(); // 프로젝트뱃지
+//	
 	@ToString.Exclude
 	@ManyToOne
 	@JoinColumn(name="CREATOR")
@@ -89,22 +89,21 @@ public class Project implements Serializable {
 	@ToString.Exclude
 	@ManyToOne
 	@JoinColumn(name="MANAGER")
-	@JsonIgnore
 	private Employee Employee2; // 담당자 ID
 
 
-	public Chat addChat(Chat Chat) {
-		getChats().add(Chat);
-		Chat.setProject(this);
-
-		return Chat;
-	} // addChat
-
-	public Chat removeChat(Chat Chat) {
-		getChats().remove(Chat);
-		Chat.setProject(null);
-
-		return Chat;
-	} // removeChat
+//	public Chat addChat(Chat Chat) {
+//		getChats().add(Chat);
+//		Chat.setProject(this);
+//
+//		return Chat;
+//	} // addChat
+//
+//	public Chat removeChat(Chat Chat) {
+//		getChats().remove(Chat);
+//		Chat.setProject(null);
+//
+//		return Chat;
+//	} // removeChat
 
 } // end class

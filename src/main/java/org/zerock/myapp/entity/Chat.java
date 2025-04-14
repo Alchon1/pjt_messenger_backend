@@ -66,41 +66,41 @@ public class Chat implements Serializable {
 	@JoinColumn(name="PJT_ID")
 	private Project Project; // 프로젝트 뱃지 id
 
-	@ToString.Exclude
-	@OneToMany(mappedBy="Chat")
-	private List<ChatEmployee> ChatEmployees = new Vector<>(); //  작성자 id 
-
-	@ToString.Exclude
-	@OneToMany(mappedBy="Chat")
-	private List<Message> Messages = new Vector<>(); // 메시지 id
+//	@ToString.Exclude
+//	@OneToMany(mappedBy="Chat")
+//	private List<ChatEmployee> ChatEmployees = new Vector<>(); //  작성자 id 
+//
+//	@ToString.Exclude
+//	@OneToMany(mappedBy="Chat")
+//	private List<Message> Messages = new Vector<>(); // 메시지 id
 
 	
-	public ChatEmployee addChatEmployee(ChatEmployee ChatEmployee) {
-		getChatEmployees().add(ChatEmployee);
-		ChatEmployee.setChat(this);
-
-		return ChatEmployee;
-	} // addChatEmployee
-
-	public ChatEmployee removeChatEmployee(ChatEmployee ChatEmployee) {
-		getChatEmployees().remove(ChatEmployee);
-		ChatEmployee.setChat(null);
-
-		return ChatEmployee;
-	} // removeChatEmployee
-
-	public Message addMessage(Message Message) {
-		getMessages().add(Message);
-		Message.setChat(this);
-
-		return Message;
-	} // addMessage
-
-	public Message removeMessage(Message Message) {
-		getMessages().remove(Message);
-		Message.setChat(null);
-
-		return Message;
-	} // removeMessage
+//	public ChatEmployee addChatEmployee(ChatEmployee ChatEmployee) {
+//		getChatEmployees().add(ChatEmployee);
+//		ChatEmployee.setChat(this);
+//
+//		return ChatEmployee;
+//	} // addChatEmployee
+//
+//	public ChatEmployee removeChatEmployee(ChatEmployee ChatEmployee) {
+//		getChatEmployees().remove(ChatEmployee);
+//		ChatEmployee.setChat(null);
+//
+//		return ChatEmployee;
+//	} // removeChatEmployee
+//
+//	public Message addMessage(Message Message) {
+//		getMessages().add(Message);
+//		Message.setChat(this);
+//
+//		return Message;
+//	} // addMessage
+//
+//	public Message removeMessage(Message Message) {
+//		getMessages().remove(Message);
+//		Message.setChat(null);
+//
+//		return Message;
+//	} // removeMessage
 
 } // end class

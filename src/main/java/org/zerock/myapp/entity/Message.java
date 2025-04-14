@@ -66,9 +66,9 @@ public class Message implements Serializable {
 	
 	// join
 	// @JsonManagedReference("course-instructor")	// fix
-	@ToString.Exclude
-	@OneToMany(mappedBy="Message")
-	private List<File> Files = new Vector<>(); // 파일
+//	@ToString.Exclude
+//	@OneToMany(mappedBy="Message")
+//	private List<File> Files = new Vector<>(); // 파일
 
 	@ManyToOne
 	@JoinColumn(name="CHAT_ID")
@@ -79,18 +79,18 @@ public class Message implements Serializable {
 	private Employee Employee; // 사원
 
 
-	public File addTFile(File File) {
-		getFiles().add(File);
-		File.setMessage(this);
-
-		return File;
-	} // addFile
-
-	public File removeFile(File File) {
-		getFiles().remove(File);
-		File.setMessage(null);
-
-		return File;
-	} // removeFile
+//	public File addTFile(File File) {
+//		getFiles().add(File);
+//		File.setMessage(this);
+//
+//		return File;
+//	} // addFile
+//
+//	public File removeFile(File File) {
+//		getFiles().remove(File);
+//		File.setMessage(null);
+//
+//		return File;
+//	} // removeFile
 
 } // end class
