@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.zerock.myapp.domain.DepartmentByOrgaDTO;
 import org.zerock.myapp.entity.Department;
 import org.zerock.myapp.persistence.DepartmentRepository;
 
@@ -45,5 +46,23 @@ public class DepartmentServiceImpl implements DepartmentService {
 		
 		return data;
 	} // getById
+	
+	 @Override
+	    public DepartmentByOrgaDTO buildTree(Long rootId) {
+//		public DepartmentByOrgaDTO buildTree(Department root) {
+	        Department root = dao.findById(rootId).orElseThrow();
+	        return convertToTreeDTO(root);
+	    }
+
+	    private DepartmentByOrgaDTO convertToTreeDTO(Department dept) {
+	    	DepartmentByOrgaDTO dto = new DepartmentByOrgaDTO(dept.getName());
+
+	        List<Department> children = dept.getDepartments();
+	        for (Department child : children) {
+	            dto.getOrga().add(convertToTreeDTO(child));
+	        }
+
+	        return dto;
+	    }
 	
 }//end class

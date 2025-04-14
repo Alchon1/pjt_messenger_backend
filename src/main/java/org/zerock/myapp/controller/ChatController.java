@@ -35,7 +35,6 @@ import lombok.extern.slf4j.Slf4j;
 @NoArgsConstructor
 
 @RequestMapping("/chat")
-
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
 public class ChatController {
@@ -58,7 +57,6 @@ public class ChatController {
 	// 불러오기 실험
 
 	@GetMapping("/init")
-
 	public ChatInitResponseDTO getEmployeesAndProjects() {
 		
 		List<Employee> empList=empService.getAllList();
@@ -66,10 +64,7 @@ public class ChatController {
 		List<Department> dtList=dtService.getAllList();
 		
 		return new ChatInitResponseDTO(empList,pjList, dtList);
-	
-//	public List<Project> getProjectList(){
-//		return pjService.getAllList();
-	
+
 	}
 
 	
