@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.zerock.myapp.domain.ChatDTO;
+import org.zerock.myapp.domain.ChatEmployeeDTO;
 import org.zerock.myapp.domain.ChatInitResponseDTO;
-import org.zerock.myapp.entity.Chat;
 import org.zerock.myapp.entity.Department;
 import org.zerock.myapp.entity.Employee;
 import org.zerock.myapp.entity.Project;
@@ -41,44 +41,22 @@ import lombok.extern.slf4j.Slf4j;
 public class ChatController {
 		
 	@Autowired private ChatService chatService;
-	@Autowired private EmployeeService empService;
-	@Autowired private ProjectService pjService;
-	@Autowired private DepartmentService dtService;
-	
-	
-	// 리스트
+    @Autowired private EmployeeService empService;
+    @Autowired private ProjectService pjService;
+    @Autowired private DepartmentService dtService;
+    
 	@GetMapping
-	List<Chat> list() { 
+	List<ChatDTO> list() { // 리스트
 		log.debug("list() invoked.");
 		
 		return chatService.findAllList();
 	} // list
 
 	
-	// 불러오기 실험
-
-	@GetMapping("/init")
-//	@GetMapping("/selectPj")
-	public ChatInitResponseDTO getEmployeesAndProjects() {
-		
-		List<Employee> empList=empService.getAllList();
-		List<Project> pjList=pjService.getAllList();
-		List<Department> dtList=dtService.getAllList();
-		
-		return new ChatInitResponseDTO(empList,pjList, dtList);
-	
-//	public List<Project> getProjectList(){
-//		return pjService.getAllList();
-	
-	}
-
-	
 	// 등록 처리
 	@PostMapping
-	Chat register(@RequestBody ChatDTO dto) { 
+	ChatDTO register(@RequestBody ChatDTO dto) { // 등록 처리
 		log.debug("register() invoked.");
-		
-		
 		
 		return chatService.createRoom(dto);
 	} // register
@@ -86,7 +64,7 @@ public class ChatController {
 	
 	// 세부 조회
 	@GetMapping(path = "/{id}")
-	Chat read( 
+	ChatDTO read( // 세부 조회
 			@PathVariable Long id
 			) {
 		log.debug("read({}) invoked.",id);
@@ -115,5 +93,23 @@ public class ChatController {
 		return chatService.deleteById(id);
 	} // delete
 	
+	@PostMapping("/{chatId}/invite")
+	public List<ChatEmployeeDTO> inviteEmployees(
+	    @PathVariable Long chatId,
+	    @RequestBody List<ChatEmployeeDTO> inviteList) {
+		
+	    return chatService.inviteEmployeesToChat(chatId, inviteList);
+	}
+	
+	@GetMapping("/init")
+	   public ChatInitResponseDTO getEmployeesAndProjects() {
+	      
+	      List<Employee> empList=empService.getAllList();
+	      List<Project> pjList=pjService.getAllList();
+	      List<Department> dtList=dtService.getAllList();
+	      
+	      return new ChatInitResponseDTO(empList,pjList, dtList);
 
+   }
+	
 } // end class

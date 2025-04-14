@@ -1,91 +1,64 @@
 package org.zerock.myapp.handler;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
-import org.zerock.myapp.domain.MessageDTO;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import jakarta.servlet.annotation.HandlesTypes;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 @Component
-@RequiredArgsConstructor
-
 public class WebSocketChatHandler extends TextWebSocketHandler {
-    private final ObjectMapper mapper;
 
-    // 현재 연결된 세션들
-    private final Set<WebSocketSession> sessions = new HashSet<>();
+    private final Map<Long, Set<WebSocketSession>> chatRoomSessions = new ConcurrentHashMap<>();
 
-    // chatRoomId: {session1, session2}
-    private final Map<Long,Set<WebSocketSession>> chatRoomSessionMap = new HashMap<>();
-
-    // 소켓 연결 확인
     @Override
-    public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-        // TODO Auto-generated method stub
-        log.info("{} 연결됨", session.getId());
-        this.sessions.add(session);
-    }
+    public void afterConnectionEstablished(WebSocketSession session) {
+        // 쿼리파라미터에서 채팅방 ID 추출
+        Long chatId = getChatIdFromSession(session);
+        chatRoomSessions.computeIfAbsent(chatId, k -> ConcurrentHashMap.newKeySet()).add(session);
+    } // afterConnectionEstablished
 
-    // 소켓 통신 시 메세지의 전송을 다루는 부분
     @Override
-    protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-        String payload = message.getPayload();
-        log.info("payload {}", payload);
-
-        // 페이로드 -> chatMessageDto로 변환
-        MessageDTO MessageDto = mapper.readValue(payload, MessageDTO.class);
-        log.info("session {}", MessageDto.toString());
-
-        Long chatRoomId = MessageDto.getChat().getId();
-        // 메모리 상에 채팅방에 대한 세션 없으면 만들어줌
-        if(!chatRoomSessionMap.containsKey(chatRoomId)){
-            chatRoomSessionMap.put(chatRoomId,new HashSet<>());
+    protected void handleTextMessage(WebSocketSession session, TextMessage message)  {
+        Long chatId = getChatIdFromSession(session);
+        Set<WebSocketSession> sessions = chatRoomSessions.get(chatId);
+        if (sessions != null) {
+            for (WebSocketSession s : sessions) {
+                try {
+                    s.sendMessage(message);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
-        
-        Set<WebSocketSession> chatRoomSession = chatRoomSessionMap.get(chatRoomId);
-        
+    } // handleTextMessage
 
-    }
-
-    // 소켓 종료 확인
     @Override
-	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-		log.debug("afterConnectionClosed({},{}) invoked.", session, status);
-		
-		this.sessions.remove(session);
-		this.sessions.forEach(s-> log.info("\t + Active Session:{}", s));
-	}//afterConnectionClosed
+    public void afterConnectionClosed(WebSocketSession session, CloseStatus status) {
+        Long chatId = getChatIdFromSession(session);
+        Set<WebSocketSession> sessions = chatRoomSessions.get(chatId);
+        if (sessions != null) {
+            sessions.remove(session);
+        }
+    } // afterConnectionClosed
 
-    // ====== 채팅 관련 메소드 ======
-    private void removeClosedSession(Set<WebSocketSession> chatRoomSession) {
-        chatRoomSession.removeIf(sess -> !this.sessions.contains(sess));
-    }
+    private Long getChatIdFromSession(WebSocketSession session) {
+        String query = session.getUri().getQuery(); // 예: "chatId=3"
 
-    private void sendMessageToChatRoom(MessageDTO MessageDto, Set<WebSocketSession> chatRoomSession) {
-        chatRoomSession.parallelStream().forEach(sess -> sendMessage(sess, MessageDto));//2
-    }
+        if (query == null || !query.startsWith("chatId=")) {
+            throw new IllegalArgumentException("chatId 파라미터가 유효하지 않습니다: " + query);
+        }
 
-
-    public <T> void sendMessage(WebSocketSession session, T message) {
-        try{
-            session.sendMessage(new TextMessage(mapper.writeValueAsString(message)));
-        } catch (IOException e) {
-            log.error(e.getMessage(), e);
+        try {
+            return Long.parseLong(query.split("=")[1]);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("chatId가 숫자가 아닙니다: " + query);
         }
     }
     
-}
+} // end class

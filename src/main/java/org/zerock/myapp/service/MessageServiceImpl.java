@@ -1,5 +1,6 @@
 package org.zerock.myapp.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.zerock.myapp.domain.MessageDTO;
 import org.zerock.myapp.entity.Message;
+import org.zerock.myapp.persistence.ChatRepository;
 import org.zerock.myapp.persistence.MessageRepository;
 
 import jakarta.annotation.PostConstruct;
@@ -20,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class MessageServiceImpl implements MessageService {
     @Autowired MessageRepository dao;
-	
+    @Autowired private ChatRepository chatRepository;
 	
 	@PostConstruct
     void postConstruct(){
@@ -85,6 +87,22 @@ public class MessageServiceImpl implements MessageService {
 		//dao.deleteById(id);
 		return true;
 	} // deleteById
+
+
+	@Override
+	public Message saveMessage(MessageDTO dto) {
+		
+		Message message = new Message();
+
+		message.setEmployee(dto.getEmployee());
+		message.setDetail(dto.getDetail());
+		message.setChat(chatRepository.findById(dto.getChat().getId())
+                .orElseThrow(() -> new IllegalArgumentException("Chat not found")));
+//		message.setChat(dto.getChat()); / 어떤 방법이 맞는지 궁금
+		message.setCrtDate(new Date());
+		
+		return this.dao.save(message);
+	} // saveMessage
 	
 	
 	

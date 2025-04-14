@@ -9,6 +9,7 @@ import org.hibernate.annotations.SourceType;
 import org.hibernate.generator.EventType;
 import org.zerock.myapp.util.BooleanToIntegerConverter;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Column;
@@ -59,8 +60,13 @@ public class Department implements Serializable {
 	@Column(name="UDT_DATE")
 	private Date udtDate;
 	
+<<<<<<< HEAD
 	@Column(name="P_DEPT_ID")
 	private Long pDeptId; // 상위부서
+=======
+//	@Column(name="P_DEPT_ID")
+//	private Long pDeptId; // 상위부서
+>>>>>>> tae
 
 	
 	// join
@@ -72,6 +78,14 @@ public class Department implements Serializable {
 //	@OneToMany(mappedBy="Department")
 //	private List<Department> Departments = new Vector<>(); // 부서
 
+<<<<<<< HEAD
+=======
+	@JsonIgnore
+	@ToString.Exclude
+	@OneToMany(mappedBy="Department")
+	private List<Department> Departments = new Vector<>(); // 부서
+
+>>>>>>> tae
 //	@ToString.Exclude
 //	@OneToMany(mappedBy="Department")
 //	private List<Employee> Employees = new Vector<>(); // 사원

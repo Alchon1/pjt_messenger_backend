@@ -3,7 +3,11 @@ package org.zerock.myapp.entity;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
+<<<<<<< HEAD
 import java.time.LocalDateTime;
+=======
+import java.util.Date;
+>>>>>>> tae
 
 import org.hibernate.annotations.CurrentTimestamp;
 import org.hibernate.annotations.SourceType;
@@ -35,7 +39,6 @@ import lombok.Data;
 })
 
 // 프로젝트 entity
-
 @Entity
 @Table(name="T_PROJECT")
 public class Project implements Serializable {
@@ -43,8 +46,12 @@ public class Project implements Serializable {
 
 	//1. pk
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+<<<<<<< HEAD
 	@SequenceGenerator(name = "ko", sequenceName = "T_PROJECT_SEQ", initialValue = 1, allocationSize = 1)
 	@Column(name = "ID", unique=true, nullable=false)
+=======
+ 	@SequenceGenerator(name = "ko", sequenceName = "T_PROJECT_SEQ", initialValue = 1, allocationSize = 1)
+>>>>>>> tae
 	private Long id; // 프로젝트 id
 
 	@Column(nullable=false, length = 500)
@@ -56,10 +63,17 @@ public class Project implements Serializable {
 	@Column(nullable=false, length = 1)
 	private Integer status; // 프로젝트상태 (진행예정=1, 진행중=2, 완료=3)
 
+<<<<<<< HEAD
 	@Column(nullable=false)
 	private LocalDate startDate; // 시작일
 	
 	@Column(nullable=false)
+=======
+	@Column(nullable=false, length = 500)
+	private LocalDate startDate; // 시작일
+	
+	@Column(nullable=false, length = 500)
+>>>>>>> tae
 	private LocalDate endDate; // 종료일
 
 	@Convert(converter = BooleanToIntegerConverter.class)
@@ -68,11 +82,19 @@ public class Project implements Serializable {
 
 	
 	@CurrentTimestamp(event = EventType.INSERT, source = SourceType.DB)
+<<<<<<< HEAD
 	@Basic(optional = false, fetch = FetchType.LAZY)
     private LocalDateTime crtDate; // 등록일
 
 	@CurrentTimestamp(event = EventType.UPDATE, source = SourceType.DB)
 	private LocalDateTime udtDate; // 수정일
+=======
+ 	@Basic(optional = false, fetch = FetchType.LAZY)
+	private Date crtDate; // 등록일
+
+	@CurrentTimestamp(event = EventType.UPDATE, source = SourceType.DB)
+	private Date udtDate; // 수정일
+>>>>>>> tae
 
 	
 	// join

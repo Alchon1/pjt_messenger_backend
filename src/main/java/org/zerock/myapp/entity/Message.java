@@ -72,7 +72,7 @@ public class Message implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name="CHAT_ID")
-	private Chat Chat; // 채팅
+	private Chat chat; // 채팅
 
 	@ManyToOne
 	@JoinColumn(name="EMPNO")

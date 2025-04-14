@@ -45,14 +45,19 @@ public class Employee implements Serializable {
 	//1. pk
 	// 생성기 만들어야 함.
 	@Id 
+<<<<<<< HEAD
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "EMPNO", unique=true, nullable=false, length=255)
+=======
+ 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+ 	@Column(name = "EMPNO", unique=true, nullable=false, length=255)
+>>>>>>> tae
 	private String empno; // 사번
 	
 	@Column(nullable = false, length=255)
 	private String name; // 사원명
 	
-	@Column(nullable = false)
+	@Column(nullable = false, length=255)
 	private Integer position; // 직급(팀원=1, 팀장=2, 부서장=3, CEO=4, 인사담당자=5, 시스템관리자=9)
 
 	@Column(nullable = false, length=255)
@@ -91,16 +96,42 @@ public class Employee implements Serializable {
 //	@ToString.Exclude
 //	@OneToMany(mappedBy="Employee")
 //	private List<Board> Board = new Vector<>(); // 게시판 작성자
+<<<<<<< HEAD
 //
 //	@ToString.Exclude
 //	@OneToMany(mappedBy="Employee")
 //	private List<ChatEmployee> ChatEmployees = new Vector<>(); // 채팅방을 사용하는 사원
 //
+=======
+
+//	@ToString.Exclude
+//	@OneToMany(mappedBy="Employee")
+//	private List<ChatEmployee> ChatEmployees = new Vector<>(); // 채팅방을 사용하는 사원
+
+>>>>>>> tae
 	@ManyToOne
 	@JoinColumn(name="DEPT_ID")
 	private Department Department; // 부서 ID
 //
 //	@ToString.Exclude
+//	@OneToMany(mappedBy="Employee")
+//	private List<File> Files = new Vector<>(); // 프로필사진
+//
+//	@ToString.Exclude
+//	@OneToMany(mappedBy="Employee")
+//	private List<Message> Messages = new Vector<>(); // 메시지 작성자
+
+//	@ToString.Exclude
+<<<<<<< HEAD
+//	@OneToMany(mappedBy="pjtCreator")
+//	private List<Project> createProjects = new Vector<>(); // pjt_만든사람 id
+
+//	@ToString.Exclude
+//	@OneToMany(mappedBy="pjtManager")
+//	private List<Project> manageProjects = new Vector<>(); // pjt_담당자 id
+
+//	@ToString.Exclude
+=======
 //	@OneToMany(mappedBy="Employee")
 //	private List<File> Files = new Vector<>(); // 프로필사진
 //
@@ -117,14 +148,20 @@ public class Employee implements Serializable {
 //	private List<Project> manageProjects = new Vector<>(); // pjt_담당자 id
 
 //	@ToString.Exclude
+>>>>>>> tae
 //	@OneToMany(mappedBy="Employee")
 //	private List<Work> Works = new Vector<>(); // 지시자
 //
 //	@ToString.Exclude
 //	@OneToMany(mappedBy="Employee")
 //	private List<WorkEmployee> WorkEmployees = new Vector<>(); // 담당자
+<<<<<<< HEAD
 //
 //
+=======
+
+
+>>>>>>> tae
 //	public Board addBoard(Board Board) {
 //		getBoard().add(Board);
 //		Board.setEmployee(this);
@@ -138,8 +175,13 @@ public class Employee implements Serializable {
 //
 //		return Board;
 //	} // removeBoard
+<<<<<<< HEAD
 //
 //
+=======
+
+
+>>>>>>> tae
 //	public ChatEmployee addChatEmployee(ChatEmployee ChatEmployee) {
 //		getChatEmployees().add(ChatEmployee);
 //		ChatEmployee.setEmployee(this);
@@ -153,8 +195,13 @@ public class Employee implements Serializable {
 //
 //		return ChatEmployee;
 //	} // removeChatEmployee
+<<<<<<< HEAD
 //	
 //
+=======
+	
+
+>>>>>>> tae
 //	public File addFile(File File) {
 //		getFiles().add(File);
 //		File.setEmployee(this);

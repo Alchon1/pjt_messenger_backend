@@ -97,7 +97,11 @@ public class Work implements Serializable {
 //
 //		return WorkEmployee;
 //	} // addWorkEmployee
+<<<<<<< HEAD
 
+=======
+//
+>>>>>>> tae
 //	public WorkEmployee removeWorkEmployee(WorkEmployee WorkEmployee) {
 //		getWorkEmployees().remove(WorkEmployee);
 //		WorkEmployee.setWork(null);
