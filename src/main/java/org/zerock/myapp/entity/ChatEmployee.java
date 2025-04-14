@@ -2,6 +2,7 @@ package org.zerock.myapp.entity;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import org.hibernate.annotations.CurrentTimestamp;
@@ -9,12 +10,12 @@ import org.hibernate.annotations.SourceType;
 import org.hibernate.generator.EventType;
 import org.zerock.myapp.util.BooleanToIntegerConverter;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
+import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
@@ -35,24 +36,22 @@ public class ChatEmployee implements Serializable {
 	private ChatEmployeePK id; // 채팅방-사원 id
 	
 	@Convert(converter = BooleanToIntegerConverter.class)
-	@Column(nullable=false)
+	@Column(nullable=false, length= 500)
 	private Boolean enabled = true; // 활성화상태(1=유효,0=삭제)
 
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
 	@CurrentTimestamp(event = EventType.INSERT, source = SourceType.DB)
-	@Column(name="CRT_DATE", nullable = false)
-	private Date crtDate; // 생성일
+   	@Basic(optional = false, fetch = FetchType.LAZY)
+	private LocalDateTime crtDate; // 생성일
 
 	@CurrentTimestamp(event = EventType.UPDATE, source = SourceType.DB)
-	@Column(name="UDT_DATE")
-	private Date udtDate; // 수정일
+	private LocalDateTime udtDate; // 수정일
 
 	
 	// join
 	@ManyToOne
 	@MapsId("chatId") // 복합 키의 chatId 필드와 매핑
 	@JoinColumn(name="CHAT_ID", referencedColumnName="ID", insertable=false, updatable=false)
-	private Chat Chat; // 채팅방 id 
+	private Chat Chat; // 채팅방 id
 
 	@ManyToOne
 	@MapsId("empno") // 복합 키의 empno 필드와 매핑

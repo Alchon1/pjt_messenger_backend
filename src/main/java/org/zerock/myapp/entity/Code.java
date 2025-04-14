@@ -2,20 +2,11 @@ package org.zerock.myapp.entity;
 
 import java.io.Serial;
 import java.io.Serializable;
-import jakarta.persistence.*;
-import lombok.Data;
-
-import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
 
-import org.hibernate.annotations.CurrentTimestamp;
-import org.hibernate.annotations.SourceType;
-import org.hibernate.generator.EventType;
-import org.zerock.myapp.util.BooleanToIntegerConverter;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import lombok.Data;
 
 
 @Data
@@ -49,7 +40,6 @@ public class Code implements Serializable {
 	private Integer orderNum;
 	
 	
-	//@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
 	//@CurrentTimestamp(event = EventType.INSERT, source = SourceType.DB)
 	//@Column(name="CRT_DATE", nullable = false)
 	private Date crtDate;

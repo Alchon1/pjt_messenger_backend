@@ -26,7 +26,7 @@ public class MessageDTO {
 	private Date udtDate; // 수정일
 
 	// join
-	private List<File> Files = new Vector(); // 파일
+	private List<File> Files = new Vector<>(); // 파일
 	private Chat Chat; // 채팅
 	private Employee Employee; // 사원
 	

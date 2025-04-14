@@ -32,7 +32,7 @@ public class WorkDTO {
 	
 	// join
 	private Employee Employee; // 지시자 id
-	private List<WorkEmployee> WorkEmployees = new Vector(); // 업무-사원 테이블
+	private List<WorkEmployee> WorkEmployees = new Vector<>(); // 업무-사원 테이블
 	
 	private String searchWord; // 검색항목
 	private String searchText; // 검색문

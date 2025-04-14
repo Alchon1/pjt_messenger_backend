@@ -45,14 +45,17 @@ public class EmployeeDTO {
 	
 	
 	// join
-	private List<Board> Board = new Vector(); // 게시판 작성자
-	private List<ChatEmployee> ChatEmployees = new Vector(); // 채팅방을 사용하는 사원
+	private List<Board> Board = new Vector<>(); // 게시판 작성자
+	private List<ChatEmployee> ChatEmployees = new Vector<>(); // 채팅방을 사용하는 사원
 	private Department Department; // 부서 ID
-	private List<Message> Messages = new Vector(); // 메시지 작성자
-	private List<Project> Projects1 = new Vector(); // 만든사람 id
-	private List<Project> Projects2 = new Vector(); // 담당자 id
-	private List<Work> Works = new Vector(); // 지시자
-	private List<WorkEmployee> WorkEmployees = new Vector(); // 담당자
+
+	private List<File> Files = new Vector<>(); // 프로필사진
+	private List<Message> Messages = new Vector<>(); // 메시지 작성자
+//	private List<Project> Projects1 = new Vector<>(); // 만든사람 id
+//	private List<Project> Projects2 = new Vector<>(); // 담당자 id
+	private List<Work> Works = new Vector<>(); // 지시자
+	private List<WorkEmployee> WorkEmployees = new Vector<>(); // 담당자
+
 	
 	private List<File> Files = new Vector(); // 프로필사진
 	private String searchWord; // 검색항목
