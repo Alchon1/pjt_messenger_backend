@@ -21,24 +21,37 @@ import lombok.extern.slf4j.Slf4j;
 
 @Service
 public class ChatServiceImpl implements ChatService {
-    @Autowired ChatRepository dao;
+    @Autowired ChatRepository chatRepository;
 	
 	
 	@PostConstruct
     void postConstruct(){
         log.debug("ChatServiceImpl -- postConstruct() invoked");
-        log.debug("dao: {}", dao);
+        log.debug("chatRepository: {}", chatRepository);
     }//postConstruct
 
 
 	@Override
-	public List<Chat> findAllList() {	//검색 없는 전체 리스트
-		log.debug("ChatServiceImpl -- getAllList() invoked");
-		
-		List<Chat> list = this.dao.findAllByEnabled(true);
-		
-		return list;
-	} // getAllList
+	   public List<ChatDTO> findAllList() {   //검색 없는 전체 리스트
+	      log.debug("ChatServiceImpl -- getAllList() invoked");
+	      
+	      List<Chat> chatList = this.chatRepository.findAllByEnabled(true);
+	      
+	      List<ChatDTO> chatDtoList = new Vector<>();
+	      
+	      for (Chat chat : chatList) {
+	           ChatDTO dto = new ChatDTO();
+	           dto.setId(chat.getId());
+	           dto.setName(chat.getName());
+	           dto.setEnabled(chat.getEnabled());
+	           dto.setCrtDate(chat.getCrtDate());
+	           dto.setProject(chat.getProject());
+
+	           chatDtoList.add(dto);
+	       }
+	      
+	      return chatDtoList;
+	   } // getAllList
 	
 	@Override
 	public List<Chat> getSearchList(ChatDTO dto) {	//검색 있는 전체 리스트
@@ -61,7 +74,7 @@ public class ChatServiceImpl implements ChatService {
 		chat.setCrtDate(new Date());
 //		chat.setProject(null);
 		
-		Chat saved = this.dao.save(chat);
+		Chat saved = this.chatRepository.save(chat);
 		
 		log.debug("create data: {}", chat);
 		
@@ -75,7 +88,7 @@ public class ChatServiceImpl implements ChatService {
 		//값이 존재하면 반환하고, 없으면 new Course()와 같은 기본값을 반환합니다.
 		Chat data = new Chat();//dao.findById(id).orElse(new Chat());
 		
-		data = this.dao.findById(id).orElse(new Chat());
+		data = this.chatRepository.findById(id).orElse(new Chat());
 		
 		return data;
 	} // getById
@@ -84,13 +97,13 @@ public class ChatServiceImpl implements ChatService {
 	public Boolean update(ChatDTO dto) {//수정 처리
 		log.debug("ChatServiceImpl -- update({}) invoked", dto);
 
-	    Chat chat = this.dao.findById(dto.getId())
+	    Chat chat = this.chatRepository.findById(dto.getId())
 	        .orElseThrow(() -> new EntityNotFoundException("채팅방이 존재하지 않습니다."));
 
 	    chat.setName(dto.getName());
 	    chat.setUdtDate(new Date());
 	    
-	    this.dao.save(chat);
+	    this.chatRepository.save(chat);
 	    
 		Boolean isUpdate = true;
 		return isUpdate;
@@ -100,12 +113,12 @@ public class ChatServiceImpl implements ChatService {
 	public Boolean deleteById(Long id) { // 삭제 처리
 		log.debug("ChatServiceImpl -- deleteById({}) invoked", id);
 		
-		Chat chat = this.dao.findById(id)
+		Chat chat = this.chatRepository.findById(id)
 				.orElseThrow(() -> new EntityNotFoundException("채팅방이 존재하지 않습니다."));;
 		
 		chat.setEnabled(false);
 		
-		this.dao.save(chat);
+		this.chatRepository.save(chat);
 		
 		return true;
 	} // deleteById
