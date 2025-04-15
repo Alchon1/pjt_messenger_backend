@@ -1,6 +1,7 @@
 package org.zerock.myapp.service;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,15 @@ public class ProjectServiceImpl implements ProjectService {
 		log.debug("dao: {}", this.dao);
 	}// postConstruct
 
+	@Override
+	public List<Project> getAllList() {	//검색 없는 전체 리스트
+		log.debug("ProjectServiceImpl -- getAllList() invoked");
+		
+		List<Project> list = dao.findAll();
+		
+		return list;
+	} // getAllList
+	
 	@Override
 	public Page<Project> getSearchList(ProjectDTO dto, Pageable paging) {
 		log.debug("\t+ ProjectServiceImpl -- getSearchList(()) invoked", dto);

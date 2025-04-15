@@ -1,11 +1,15 @@
 package org.zerock.myapp.service;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.zerock.myapp.domain.ProjectDTO;
 import org.zerock.myapp.entity.Project;
 
 public interface ProjectService {
+	
+	public abstract List<Project> getAllList();     			// 전체 조회
 	
 	public abstract Page<Project> getSearchList(ProjectDTO dto, Pageable paging); 	// 전체 조회(검색)
 	public abstract Page<Project> getUpCommingList(Pageable paging);

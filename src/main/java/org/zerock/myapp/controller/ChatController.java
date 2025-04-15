@@ -59,11 +59,11 @@ public class ChatController {
 	
 	// 리스트
 	@GetMapping
-	List<ChatDTO> list() { 
-		log.debug("list() invoked.");
-		
-		return chatService.findAllList();
-	} // list
+//	List<ChatDTO> list() { 
+//		log.debug("list() invoked.");
+//		
+//		return chatService.findAllList();
+//	} // list
 
 	
 	
