@@ -15,25 +15,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 
 public class ChatInitResponseDTO {
-<<<<<<< HEAD
 
-=======
-//    private List<Employee> employees  = new Vector<>();;
-//    private List<Project> projects = new Vector<>();;
-//    private List<Department> department = new Vector<>();;
->>>>>>> tae
     private List<Employee> empList;
     private List<Project> pjList; 
     private List<Department> dtList;
 
-<<<<<<< HEAD
-
-=======
-//    public ChatInitResponseDTO(List<Employee> empList, List<Project> pjList, List<Departments>dtList) {
-//    this.empList=empList;
-//    this.pjList=pjList;
-//    this.dtList=dtList;
-//    }//@AllArgsConstructor
->>>>>>> tae
     
 }//ChatInitResponseDTO

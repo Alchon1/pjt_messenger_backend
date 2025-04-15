@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
@@ -26,7 +27,7 @@ public class DateTimeUtils {
 
 	// Create a Calendar object with the specified year, month, date, hour, minute, second
 	// Where, month is started with 0 (January)
-	private static Calendar getCalendar(int year, int month, int date, int hour, int minute, int second) {
+	public static Calendar getCalendar(int year, int month, int date, int hour, int minute, int second) {
 		log.info("getCalendar({}, {}, {}, {}, {}, {}) invoked.", year, month, date, hour, minute, second);
 		
 		Calendar calendar = Calendar.getInstance();
@@ -40,7 +41,7 @@ public class DateTimeUtils {
 	
 	// Create a LocalDateTime with the specified year, month, date, hour, minute, second
 	// Where, month is started with 1 (January)
-	private static LocalDateTime getLocalDateTime(int year, int month, int date, int hour, int minute, int second) {
+	public static LocalDateTime getLocalDateTime(int year, int month, int date, int hour, int minute, int second) {
 		log.info("getLocalDateTime({}, {}, {}, {}, {}, {}) invoked.", year, month, date, hour, minute, second);
 		
 		return LocalDateTime.of(year, month, date, hour, minute, second);
@@ -48,14 +49,14 @@ public class DateTimeUtils {
 	
 	// Create a LocalDate with the specified year, month, date
 	// where, month is started with 1 (January)
-	private static LocalDate getLocalDate(int year, int month, int date) {
+	public static LocalDate getLocalDate(int year, int month, int date) {
 		log.info("getLocalDate({}, {}, {}) invoked.", year, month, date);
 		
 		return LocalDate.of(year, month, date);
 	}
 	
 	// Create a LocalTime with the specified hour, minute, second
-	private static LocalTime getLocalTime(int hour, int minute, int second) {
+	public static LocalTime getLocalTime(int hour, int minute, int second) {
 		log.info("getLocalTime({}, {}, {}) invoked.", hour, minute, second);
 		
 		return LocalTime.of(hour, minute, second);
@@ -78,7 +79,7 @@ public class DateTimeUtils {
 	}
 	
 	// 3. Create a Date object with the specified year, month, date, hour, minute, second Using java.time.LocalDateTime.
-	private static Date getDate3(int year, int month, int date, int hour, int minute, int second) {	// Ex: 2025, 3, 6, 8, 9, 17
+	public static Date getDate3(int year, int month, int date, int hour, int minute, int second) {	// Ex: 2025, 3, 6, 8, 9, 17
 		log.info("getDate3({}, {}, {}, {}, {}, {}) invoked.", year, month, date, hour, minute, second);
 		
 		LocalDateTime localDateTime = DateTimeUtils.getLocalDateTime(year, month, date, hour, minute, second);
@@ -88,7 +89,7 @@ public class DateTimeUtils {
 	}
 
 	// 4. Create a Date object with the specified year, month, date, hour, minute, second Using java.time.LocalDateTime.
-	private static Date getDate4(int year, int month, int date, int hour, int minute, int second) {	// Ex: 2025, 3, 6, 8, 9, 17
+	public static Date getDate4(int year, int month, int date, int hour, int minute, int second) {	// Ex: 2025, 3, 6, 8, 9, 17
 		log.info("getDate4({}, {}, {}, {}, {}, {}) invoked.", year, month, date, hour, minute, second);
 		
 		LocalDateTime localDateTime = DateTimeUtils.getLocalDateTime(year, month, date, hour, minute, second);
@@ -98,7 +99,7 @@ public class DateTimeUtils {
 	}
 	
 	// 5. Create a Date object with the specified year, month, date, hour, minute, second Using java.time.LocalDate and LocalTime.
-	private static Date getDate5(int year, int month, int date, int hour, int minute, int second) {	// Ex: 2025, 3, 6, 8, 9, 17
+	public static Date getDate5(int year, int month, int date, int hour, int minute, int second) {	// Ex: 2025, 3, 6, 8, 9, 17
 		log.info("getDate5({}, {}, {}, {}, {}, {}) invoked.", year, month, date, hour, minute, second);
 		
 		LocalDate localDate = DateTimeUtils.getLocalDate(year, month, date);
@@ -107,6 +108,11 @@ public class DateTimeUtils {
 		
 //		return Date.from(localDateTime.atZone(ZoneId.of("Asia/Seoul")).toInstant());		// OK
 		return Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());		// OK
+	}
+	
+	public static Long getDday(LocalDate targetDate) {
+        LocalDate today = LocalDate.now();
+        return ChronoUnit.DAYS.between(targetDate, today);
 	}
 	
 	

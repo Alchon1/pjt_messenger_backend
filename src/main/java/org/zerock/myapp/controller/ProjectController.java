@@ -50,12 +50,12 @@ public class ProjectController {
 		return list;
 	} // list
 	
-	@GetMapping(path = "/upComming")
-	Page<Project> listUpComming() { // 리스트
-		log.debug("listUpComming() invoked.");
+	@GetMapping(path = "/upComing")
+	Page<Project> listUpComing() { // 리스트
+		log.debug("listUpComing() invoked.");
 		
 		Pageable paging = PageRequest.of(0, 2, Sort.by("endDate").descending());	// Pageable 설정
-		Page<Project> list = this.service.getUpCommingList(paging);
+		Page<Project> list = this.service.getUpComingList(paging);
 		
 		return list;
 	} // list

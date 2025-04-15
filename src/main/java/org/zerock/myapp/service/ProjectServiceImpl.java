@@ -11,6 +11,7 @@ import org.zerock.myapp.domain.ProjectDTO;
 import org.zerock.myapp.entity.Project;
 import org.zerock.myapp.persistence.EmployeeRepository;
 import org.zerock.myapp.persistence.ProjectRepository;
+import org.zerock.myapp.util.DateTimeUtils;
 
 import jakarta.annotation.PostConstruct;
 import lombok.NoArgsConstructor;
@@ -25,7 +26,8 @@ public class ProjectServiceImpl implements ProjectService {
 	ProjectRepository dao;
 	@Autowired
 	EmployeeRepository empDao;
-
+	
+	
 	@PostConstruct
 	void postConstruct() {
 		log.debug("\t+ ProjectServiceImpl -- postConstruct() invoked");
@@ -69,11 +71,16 @@ public class ProjectServiceImpl implements ProjectService {
 	} // getSearchList
 
 	@Override
-	public Page<Project> getUpCommingList(Pageable paging) {
-		log.debug("\t+ ProjectServiceImpl -- getUpCommingList(()) invoked");
-
-		return this.dao.findByEnabled(true, paging);
-	} // getUpCommingList
+	public Page<Project> getUpComingList(Pageable paging) {
+		log.debug("\t+ ProjectServiceImpl -- getUpComingList(()) invoked");
+		
+		Integer[] status = {1, 2};
+		Page<Project> pageList = this.dao.findByEnabledAndStatusIn(true, status, paging);
+		pageList.forEach(data -> {
+			data.setEndDday(DateTimeUtils.getDday(data.getEndDate()));
+		});
+		return pageList;
+	} // getUpComingList
 
 	@Override
 	public Project create(ProjectDTO dto) { // 등록 처리
@@ -114,12 +121,12 @@ public class ProjectServiceImpl implements ProjectService {
 
 		Project project = this.dao.findByEnabledAndId(true, id).orElseThrow(() -> new RuntimeException("해당 건이 조회되지 않습니다. - " + id));
 
-		project.setName(dto.getName());
-		project.setStartDate(LocalDate.parse(dto.getStartDate()));
-		project.setEndDate(LocalDate.parse(dto.getEndDate()));
-		project.setStatus(dto.getStatus());
-		project.setDetail(dto.getDetail());
-		project.setPjtManager(this.empDao.findById(dto.getManagerEmpno()).orElse(null));
+		if (dto.getName() != null) 			project.setName(dto.getName());
+		if (dto.getStartDate() != null) 	project.setStartDate(LocalDate.parse(dto.getStartDate()));
+		if (dto.getEndDate() != null) 		project.setEndDate(LocalDate.parse(dto.getEndDate()));
+		if (dto.getStatus() != null) 		project.setStatus(dto.getStatus());
+		if (dto.getDetail() != null) 		project.setDetail(dto.getDetail());
+		if (dto.getManagerEmpno() != null) 	project.setPjtManager(this.empDao.findById(dto.getManagerEmpno()).orElse(null));
 		
 		Project result = this.dao.save(project);
 	    log.info("Update success: {}", result);

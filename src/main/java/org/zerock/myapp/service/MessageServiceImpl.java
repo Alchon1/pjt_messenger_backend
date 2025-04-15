@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.zerock.myapp.domain.MessageDTO;
 import org.zerock.myapp.entity.Message;
 import org.zerock.myapp.persistence.ChatRepository;
+import org.zerock.myapp.persistence.EmployeeRepository;
 import org.zerock.myapp.persistence.MessageRepository;
 
 import jakarta.annotation.PostConstruct;
@@ -21,13 +22,16 @@ import lombok.extern.slf4j.Slf4j;
 
 @Service
 public class MessageServiceImpl implements MessageService {
-    @Autowired MessageRepository dao;
+
+    @Autowired MessageRepository messageRepository;
     @Autowired private ChatRepository chatRepository;
-	
+	@Autowired private EmployeeRepository employeeRepository;
+    
+
 	@PostConstruct
     void postConstruct(){
         log.debug("MessageServiceImpl -- postConstruct() invoked");
-        log.debug("dao: {}", dao);
+        log.debug("dao: {}", messageRepository);
     }//postConstruct
 
 
@@ -35,7 +39,7 @@ public class MessageServiceImpl implements MessageService {
 	public List<Message> getAllList() {	//검색 없는 전체 리스트
 		log.debug("MessageServiceImpl -- getAllList() invoked");
 		
-		List<Message> list = dao.findAll();
+		List<Message> list = messageRepository.findAll();
 		
 		return list;
 	} // getAllList
@@ -94,14 +98,16 @@ public class MessageServiceImpl implements MessageService {
 		
 		Message message = new Message();
 
-		message.setEmployee(dto.getEmployee());
+
+		message.setEmployee(employeeRepository.findById(dto.getEmployee().getEmpno()).orElseThrow());
 		message.setDetail(dto.getDetail());
 		message.setChat(chatRepository.findById(dto.getChat().getId())
                 .orElseThrow(() -> new IllegalArgumentException("Chat not found")));
 //		message.setChat(dto.getChat()); / 어떤 방법이 맞는지 궁금
 		message.setCrtDate(new Date());
 		
-		return this.dao.save(message);
+		return this.messageRepository.save(message);
+
 	} // saveMessage
 	
 	

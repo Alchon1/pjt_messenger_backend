@@ -30,11 +30,6 @@ import lombok.ToString;
 
 @Data
 
-//JSON 으로 변환해서 보낼때, 제외 할 항목
-@JsonIgnoreProperties({
-	"udtDate"
-})
-
 // 사원 entity
 
 @Entity
@@ -76,7 +71,7 @@ public class Employee implements Serializable {
 	private String address; // 주소
 
 	@Column(nullable = false)
-	private BigDecimal zipCode; // 우편번호
+	private Integer zipCode; // 우편번호
 	
 	@Convert(converter = BooleanToIntegerConverter.class)
 	@Column(nullable=false)

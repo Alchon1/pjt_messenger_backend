@@ -8,7 +8,7 @@ import org.zerock.myapp.entity.Project;
 public interface ProjectService {
 	
 	public abstract Page<Project> getSearchList(ProjectDTO dto, Pageable paging); 	// 전체 조회(검색)
-	public abstract Page<Project> getUpCommingList(Pageable paging);
+	public abstract Page<Project> getUpComingList(Pageable paging);
 	
 	public abstract Project create(ProjectDTO dto);    			// 생성 처리
 	public abstract Project getById(Long id);    				// 단일 조회

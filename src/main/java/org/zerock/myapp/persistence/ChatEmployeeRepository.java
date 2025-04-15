@@ -17,6 +17,7 @@ import org.zerock.myapp.entity.ChatEmployeePK;
 @Repository
 public interface ChatEmployeeRepository extends JpaRepository<ChatEmployee, ChatEmployeePK>, JpaSpecificationExecutor<Chat> {
 	public abstract List<ChatEmployee> findByIdChatId(Long chatId);
+	public abstract List<ChatEmployee> findByEnabledAndIdChatId(Boolean b, Long chatId);
 //	List<ChatEmployee> findByIdEmployeeId(String empno);
-//	public abstract ChatEmployee findByIdChatIdAndEmployeeId(Long chatId, String empno);
+	public abstract ChatEmployee findByIdChatIdAndIdEmpno(Long chatId, String empno);
 } // end interface

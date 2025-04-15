@@ -3,11 +3,7 @@ package org.zerock.myapp.entity;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
-<<<<<<< HEAD
 import java.time.LocalDateTime;
-=======
-import java.util.Date;
->>>>>>> tae
 
 import org.hibernate.annotations.CurrentTimestamp;
 import org.hibernate.annotations.SourceType;
@@ -28,6 +24,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import lombok.Data;
 
 
@@ -45,13 +42,11 @@ public class Project implements Serializable {
 	@Serial private static final long serialVersionUID = 1L;
 
 	//1. pk
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-<<<<<<< HEAD
-	@SequenceGenerator(name = "ko", sequenceName = "T_PROJECT_SEQ", initialValue = 1, allocationSize = 1)
+
+	
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "seq_pjt")
+	@SequenceGenerator(name = "seq_pjt", sequenceName = "T_PROJECT_SEQ", initialValue = 1, allocationSize = 1)
 	@Column(name = "ID", unique=true, nullable=false)
-=======
- 	@SequenceGenerator(name = "ko", sequenceName = "T_PROJECT_SEQ", initialValue = 1, allocationSize = 1)
->>>>>>> tae
 	private Long id; // 프로젝트 id
 
 	@Column(nullable=false, length = 500)
@@ -63,17 +58,11 @@ public class Project implements Serializable {
 	@Column(nullable=false, length = 1)
 	private Integer status; // 프로젝트상태 (진행예정=1, 진행중=2, 완료=3)
 
-<<<<<<< HEAD
-	@Column(nullable=false)
-	private LocalDate startDate; // 시작일
-	
-	@Column(nullable=false)
-=======
+
 	@Column(nullable=false, length = 500)
 	private LocalDate startDate; // 시작일
 	
 	@Column(nullable=false, length = 500)
->>>>>>> tae
 	private LocalDate endDate; // 종료일
 
 	@Convert(converter = BooleanToIntegerConverter.class)
@@ -82,19 +71,15 @@ public class Project implements Serializable {
 
 	
 	@CurrentTimestamp(event = EventType.INSERT, source = SourceType.DB)
-<<<<<<< HEAD
 	@Basic(optional = false, fetch = FetchType.LAZY)
     private LocalDateTime crtDate; // 등록일
 
 	@CurrentTimestamp(event = EventType.UPDATE, source = SourceType.DB)
 	private LocalDateTime udtDate; // 수정일
-=======
- 	@Basic(optional = false, fetch = FetchType.LAZY)
-	private Date crtDate; // 등록일
 
-	@CurrentTimestamp(event = EventType.UPDATE, source = SourceType.DB)
-	private Date udtDate; // 수정일
->>>>>>> tae
+	@Transient	// DB 컬럼으로 매핑되지 않음
+	private Long endDday;	//마감 d-day
+
 
 	
 	// join

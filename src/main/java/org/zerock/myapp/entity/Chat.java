@@ -3,14 +3,12 @@ package org.zerock.myapp.entity;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 import org.hibernate.annotations.CurrentTimestamp;
 import org.hibernate.annotations.SourceType;
 import org.hibernate.generator.EventType;
+import org.zerock.myapp.domain.ChatDTO;
 import org.zerock.myapp.util.BooleanToIntegerConverter;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
@@ -22,16 +20,12 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.Data;
 
 
 @Data
-
-//JSON 으로 변환해서 보낼때, 제외 할 항목
-@JsonIgnoreProperties({
-	"udtDate"
-})
 
 // 채팅방 entity
 
@@ -40,8 +34,9 @@ import lombok.Data;
 public class Chat implements Serializable {
 	@Serial private static final long serialVersionUID = 1L;
 
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ID", unique=true, nullable=false, length= 500)
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "ko")
+	@SequenceGenerator(name = "ko", sequenceName = "T_CHAT_SEQ", initialValue = 1, allocationSize = 1)
+	@Column(name = "ID", unique=true, nullable=false, length = 500)
 	private Long id; // 채팅방 id
 
 	@Column(nullable=false, length= 500)
@@ -57,48 +52,33 @@ public class Chat implements Serializable {
 	private LocalDateTime crtDate; // 생성일
 
 	@CurrentTimestamp(event = EventType.UPDATE, source = SourceType.DB)
+	@Column
 	private LocalDateTime udtDate; // 수정일
 
 	// join
 	@ManyToOne
 	@JoinColumn(name="PJT_ID")
 	private Project Project; // 프로젝트 뱃지 id
+	
+	
+	public ChatDTO toDTO() {
+	    ChatDTO dto = new ChatDTO();
+	    dto.setId(this.id);
+	    dto.setName(this.name);
+	    dto.setEnabled(this.enabled);
 
-//	@ToString.Exclude
-//	@OneToMany(mappedBy="Chat")
-//	private List<ChatEmployee> ChatEmployees = new Vector<>(); //  작성자 id 
+	    // 연관된 Project가 있다면 projectId만 넣고, 전체 객체도 같이 보냄
+	    if (this.Project != null) {
+	        dto.setProject(this.Project);
+	    }// if
 
-//	@ToString.Exclude
-//	@OneToMany(mappedBy="Chat")
-//	private List<Message> Messages = new Vector<>(); // 메시지 id
+	    // ChatEmployees, Messages, empnos는 상황 따라 추가 가능
+	    // 예: ChatEmployeeService에서 따로 채워주거나, 여기서 일부만 초기화해도 됨
+	    // 지금은 생략 (DB 로딩 없이 이 엔티티만으로 못 가져오니까)
+
+	    return dto;
+	}// toDTO
 
 	
-//	public ChatEmployee addChatEmployee(ChatEmployee ChatEmployee) {
-//		getChatEmployees().add(ChatEmployee);
-//		ChatEmployee.setChat(this);
-//
-//		return ChatEmployee;
-//	} // addChatEmployee
-//
-//	public ChatEmployee removeChatEmployee(ChatEmployee ChatEmployee) {
-//		getChatEmployees().remove(ChatEmployee);
-//		ChatEmployee.setChat(null);
-//
-//		return ChatEmployee;
-//	} // removeChatEmployee
-
-//	public Message addMessage(Message Message) {
-//		getMessages().add(Message);
-//		Message.setChat(this);
-//
-//		return Message;
-//	} // addMessage
-//
-//	public Message removeMessage(Message Message) {
-//		getMessages().remove(Message);
-//		Message.setChat(null);
-//
-//		return Message;
-//	} // removeMessage
 
 } // end class
