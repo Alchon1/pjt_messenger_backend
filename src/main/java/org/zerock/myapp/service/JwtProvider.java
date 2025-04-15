@@ -39,10 +39,18 @@ public class JwtProvider {
         
         		String token = JWT.create()
                 .withSubject(subject) // 사용자 식별자 설정
+<<<<<<< Updated upstream
                 .withIssuer("yourAppName") // 토큰 발급자 정보
                 .withIssuedAt(now) // 발급 시각
                 .withExpiresAt(expiresAt) // 만료 시각
                 .withClaim("role", role) // 추가 클레임 설정 (예: 권한 정보)
+=======
+                .withIssuer("Mark") // 토큰 발급자 정보
+                .withIssuedAt(now) // 발급 시각
+                .withExpiresAt(expiresAt) // 만료 시각
+                .withClaim("role", role) // 추가 클레임 설정 (예: 권한 정보)
+                .withClaim("name", employee.getName())
+>>>>>>> Stashed changes
                 .sign(algorithm); // 알고리즘과 비밀키로 서명
         		
         	return token;
@@ -56,11 +64,38 @@ public class JwtProvider {
     public static String verifyToken(String token) {
         // 토큰 서명을 검증할 검증기 생성
         JWTVerifier verifier = JWT.require(algorithm)
+<<<<<<< Updated upstream
                                   .withIssuer("yourAppName") // 발급자 일치 여부 확인
+=======
+                                  .withIssuer("Mark") // 발급자 일치 여부 확인
+>>>>>>> Stashed changes
                                   .build();
 
         // 토큰 검증 및 디코딩
         DecodedJWT decoded = verifier.verify(token);
         return decoded.getSubject(); // 사용자 식별자 반환
     }
+<<<<<<< Updated upstream
+=======
+    
+    // 토큰 안에 있는 정보 사용 ( 백엔드용 )
+//    public static DecodedJWT decodeToken(String token) {
+//    	JWTVerifier verifier = JWT.require(algorithm).withIssuer("Mark").build();
+//    	return verifier.verify(token);  // 검증 + 디코딩
+//    }
+//    DecodedJWT decoded = JWT.require(algorithm).build().verify(token);
+//    String loginId = decoded.getSubject();
+//    String name = decoded.getClaim("name").asString(); 
+//    String role = decoded.getClaim("role").asString();
+    
+
+    
+    
+
+
+    
+    
+    
+    
+>>>>>>> Stashed changes
 }

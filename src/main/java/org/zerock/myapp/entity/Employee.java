@@ -46,8 +46,13 @@ public class Employee implements Serializable {
 	//1. pk
 	// 생성기 만들어야 함.
 	@Id 
+<<<<<<< Updated upstream
 //	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "EMPNO", unique=true, nullable=false)
+=======
+//	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "EMPNO", unique=true, nullable=false, length=255)
+>>>>>>> Stashed changes
 	private String empno; // 사번
 	
 	@Column(nullable = false)

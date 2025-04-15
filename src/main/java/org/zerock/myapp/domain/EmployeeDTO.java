@@ -55,9 +55,13 @@ public class EmployeeDTO {
 //	private List<Project> Projects2 = new Vector<>(); // 담당자 id
 	private List<Work> Works = new Vector<>(); // 지시자
 	private List<WorkEmployee> WorkEmployees = new Vector<>(); // 담당자
+<<<<<<< Updated upstream
 
 	
 	private List<File> Files = new Vector(); // 프로필사진
+=======
+	private Long departmentId;
+>>>>>>> Stashed changes
 	private String searchWord; // 검색항목
 	private String searchText; // 검색문
 	

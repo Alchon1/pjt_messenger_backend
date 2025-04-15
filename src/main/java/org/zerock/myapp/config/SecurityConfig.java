@@ -1,4 +1,8 @@
 package org.zerock.myapp.config;
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,15 +17,23 @@ import org.zerock.myapp.service.JwtProvider;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+<<<<<<< Updated upstream
 	
 	@Autowired
 	private LoginSuccessUrlHandler loginSuccessUrlHandler;
 
+=======
+
+    @Autowired
+    private LoginSuccessUrlHandler loginSuccessUrlHandler;
+
+>>>>>>> Stashed changes
     @Bean
     public BCryptPasswordEncoder BcryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
+<<<<<<< Updated upstream
 //    @Bean
 //    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
 //        return config.getAuthenticationManager();
@@ -74,3 +86,37 @@ public class SecurityConfig {
     
     
 } // end config
+=======
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http, JwtProvider jwtProvider) throws Exception {
+        return http
+                .csrf().disable()
+                .cors()
+                .and()
+                
+                
+                .authorizeHttpRequests(auth -> auth
+                        .anyRequest().permitAll()
+                )
+                
+//                .authorizeHttpRequests(auth -> auth
+//                        // 로그인, 회원가입
+//                        .requestMatchers(
+//                            "/auth/login",
+//                            "/auth/register",
+//                            "/auth/refresh",
+//                            "/css/**", "/js/**", "/img/**"
+//                        ).permitAll()
+                
+//                .sessionManagement()
+//                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//                .and()
+                .addFilterBefore(new JwtAuthenticationFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class)
+
+                .logout(logout -> logout
+                        .disable()
+                )
+                .build();
+    }
+}
+>>>>>>> Stashed changes

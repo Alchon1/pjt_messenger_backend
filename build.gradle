@@ -78,7 +78,10 @@ dependencies {
 	
 	// Java Web Token
 	implementation("com.auth0:java-jwt:4.4.0")
+<<<<<<< Updated upstream
 	
+=======
+>>>>>>> Stashed changes
 }
 
 tasks.named('test') {
