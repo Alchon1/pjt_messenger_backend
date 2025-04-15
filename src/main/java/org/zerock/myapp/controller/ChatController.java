@@ -3,6 +3,7 @@ package org.zerock.myapp.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.zerock.myapp.domain.ChatDTO;
 import org.zerock.myapp.domain.ChatInitResponseDTO;
@@ -69,12 +71,21 @@ public class ChatController {
 	
 	// 등록 처리
 	@PostMapping
-	Chat register(@RequestBody ChatDTO dto) { 
+	public ResponseEntity<Chat> register(
+		    @RequestParam String roomName,
+		    @RequestParam Long projectId,
+		    @RequestParam List<String> invited
+		    
+//			@RequestParam  ChatDTO dto
+			) { 
 		log.debug("register() invoked.");
+	    log.info("📦 방이름: {}, 프로젝트ID: {}, 초대자들: {}", roomName, projectId, invited);
+
+	    chatService.createRoom(roomName, projectId, invited);
+	    return ResponseEntity.ok().build();
 		
 		
-		
-		return chatService.createRoom(dto);
+//		return chatService.createRoom(dto);
 	} // register
 	
 	

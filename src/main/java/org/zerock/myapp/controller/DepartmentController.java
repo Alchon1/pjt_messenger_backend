@@ -1,5 +1,7 @@
 package org.zerock.myapp.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -7,6 +9,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.zerock.myapp.domain.DepartmentByOrgaDTO;
+import org.zerock.myapp.entity.Department;
+import org.zerock.myapp.persistence.DepartmentRepository;
+import org.zerock.myapp.service.DepartmentService;
 
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +28,19 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/department")
 @RestController
 public class DepartmentController {
+	
+    @Autowired
+    private DepartmentRepository deptRepo;
+
+    @Autowired
+    private DepartmentService deptService;
+	
+	@GetMapping("/tree")
+	public ResponseEntity<DepartmentByOrgaDTO> getDepartmentTree() {
+	    Department root = deptRepo.findById(1L).orElseThrow(); // 최상위 부서 ID를 기준
+//	    return ResponseEntity.ok(deptService.buildTree(root)); // root는 Department
+	    return ResponseEntity.ok(deptService.buildTree(1L)); // root는 Department
+	}
 	
 	@GetMapping
 	String list() { // 리스트

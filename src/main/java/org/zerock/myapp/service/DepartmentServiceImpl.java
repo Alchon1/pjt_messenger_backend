@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.zerock.myapp.domain.DepartmentByOrgaDTO;
 import org.zerock.myapp.entity.Department;
 import org.zerock.myapp.persistence.DepartmentRepository;
 
@@ -19,12 +20,33 @@ import lombok.extern.slf4j.Slf4j;
 public class DepartmentServiceImpl implements DepartmentService {
     @Autowired DepartmentRepository dao;
 	
+    
+    @Override
+    public DepartmentByOrgaDTO buildTree(Long id) {
+        Department root = dao.findById(id).orElseThrow();
+        return convertToDTO(root);
+    }
+    private DepartmentByOrgaDTO convertToDTO(Department dept) {
+        DepartmentByOrgaDTO dto = new DepartmentByOrgaDTO(dept.getName());
+        dto.setId(dept.getId());
+
+        // 자식 부서가 있다면 재귀로 처리
+        if (dept.getDepartments() != null && !dept.getDepartments().isEmpty()) {
+            for (Department child : dept.getDepartments()) {
+                dto.getOrga().add(convertToDTO(child));
+            }
+        }
+
+        return dto;
+    }
+    
 	
 	@PostConstruct
     void postConstruct(){
         log.debug("DepartmentServiceImpl -- postConstruct() invoked");
         log.debug("dao: {}", dao);
     }//postConstruct
+	
 
 
 	@Override
