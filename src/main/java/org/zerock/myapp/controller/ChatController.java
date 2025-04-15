@@ -44,18 +44,6 @@ public class ChatController {
 	@Autowired private ProjectService pjService;
 	@Autowired private DepartmentService dtService;
 	
-	
-	// 리스트
-	@GetMapping
-	List<ChatDTO> list() { 
-		log.debug("list() invoked.");
-		
-		return chatService.findAllList();
-	} // list
-
-	
-	// 불러오기 실험
-
 	@GetMapping("/init")
 	public ChatInitResponseDTO getEmployeesAndProjects() {
 		
@@ -67,6 +55,17 @@ public class ChatController {
 
 	}
 
+	
+	
+	// 리스트
+	@GetMapping
+	List<ChatDTO> list() { 
+		log.debug("list() invoked.");
+		
+		return chatService.findAllList();
+	} // list
+
+	
 	
 	// 등록 처리
 	@PostMapping
