@@ -19,6 +19,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -37,17 +38,18 @@ import lombok.Data;
 public class File implements Serializable {
 	@Serial private static final long serialVersionUID = 1L;
 
-	@Id @GeneratedValue(strategy = GenerationType.AUTO)
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "ko")
+	@SequenceGenerator(name = "ko", sequenceName = "T_FILE_SEQ", initialValue = 1, allocationSize = 1)
 	@Column(name = "ID", unique=true, nullable=false)
 	private Long id; // 파일 id
 
-	@Column(nullable=false)
+	@Column(nullable=false, length = 255)
 	private String original; // 원본명(확장자포함)
 	
-	@Column(nullable=false)
+	@Column(nullable=false, length = 255)
 	private String uuid; // UUID명
 	
-	@Column(nullable=false)
+	@Column(nullable=false, length = 255)
 	private String path; // 파일경로
 
 	@Convert(converter = BooleanToIntegerConverter.class)
@@ -56,11 +58,11 @@ public class File implements Serializable {
 
 	
 	@CurrentTimestamp(event = EventType.INSERT, source = SourceType.DB)
-	@Column(name="CRT_DATE", nullable = false)
+	@Column(nullable = false)
 	private Date crtDate; // 생성일
 
 	@CurrentTimestamp(event = EventType.UPDATE, source = SourceType.DB)
-	@Column(name="UDT_DATE")
+	@Column
 	private Date udtDate; // 수정일
 
 

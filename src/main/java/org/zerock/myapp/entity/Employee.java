@@ -12,7 +12,6 @@ import org.hibernate.annotations.SourceType;
 import org.hibernate.generator.EventType;
 import org.zerock.myapp.util.BooleanToIntegerConverter;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Column;
@@ -31,11 +30,6 @@ import lombok.ToString;
 
 @Data
 
-//JSON 으로 변환해서 보낼때, 제외 할 항목
-@JsonIgnoreProperties({
-	"udtDate"
-})
-
 // 사원 entity
 
 @Entity
@@ -45,33 +39,34 @@ public class Employee implements Serializable {
 
 	//1. pk
 	// 생성기 만들어야 함.
-	@Id @GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "EMPNO", unique=true, nullable=false)
+	@Id 
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "EMPNO", unique=true, nullable=false, length=255)
 	private String empno; // 사번
 	
-	@Column(nullable = false)
+	@Column(nullable = false, length=255)
 	private String name; // 사원명
 	
 	@Column(nullable = false)
 	private Integer position; // 직급(팀원=1, 팀장=2, 부서장=3, CEO=4, 인사담당자=5, 시스템관리자=9)
 
-	@Column(nullable = false)
+	@Column(nullable = false, length=255)
 	private String email; // 이메일
 
-	@Column(nullable = false)
+	@Column(nullable = false, length=255)
 	private String loginId; // 아이디
 	
-	@Column(nullable = false)
+	@Column(nullable = false, length=255)
 	private String password; // 비밀번호
 
-	@Column(nullable = false)
+	@Column(nullable = false, length=255)
 	private String tel; // 휴대폰번호(11자리)
 	
-	@Column(nullable = false)
+	@Column(nullable = false, length=255)
 	private String address; // 주소
 
 	@Column(nullable = false)
-	private BigDecimal zipCode; // 우편번호
+	private Integer zipCode; // 우편번호
 	
 	@Convert(converter = BooleanToIntegerConverter.class)
 	@Column(nullable=false)
@@ -79,15 +74,15 @@ public class Employee implements Serializable {
 	
 	
 	@CurrentTimestamp(event = EventType.INSERT, source = SourceType.DB)
-	@Column(name="CRT_DATE")
+	@Column(nullable=false)
 	private Date crtDate; // 등록일
 
 	@CurrentTimestamp(event = EventType.UPDATE, source = SourceType.DB)
-	@Column(name="UDT_DATE")
+	@Column
 	private Date udtDate; // 수정일
 
 	
-	// join
+//	// join
 //	@ToString.Exclude
 //	@OneToMany(mappedBy="Employee")
 //	private List<Board> Board = new Vector<>(); // 게시판 작성자
@@ -95,11 +90,11 @@ public class Employee implements Serializable {
 //	@ToString.Exclude
 //	@OneToMany(mappedBy="Employee")
 //	private List<ChatEmployee> ChatEmployees = new Vector<>(); // 채팅방을 사용하는 사원
-
+//
 	@ManyToOne
 	@JoinColumn(name="DEPT_ID")
 	private Department Department; // 부서 ID
-
+//
 //	@ToString.Exclude
 //	@OneToMany(mappedBy="Employee")
 //	private List<File> Files = new Vector<>(); // 프로필사진
@@ -107,16 +102,15 @@ public class Employee implements Serializable {
 //	@ToString.Exclude
 //	@OneToMany(mappedBy="Employee")
 //	private List<Message> Messages = new Vector<>(); // 메시지 작성자
-//
+
 //	@ToString.Exclude
-//	@OneToMany(mappedBy="Employee1")
-//    @JsonIgnore
-//	private List<Project> Projects1 = new Vector<>(); // 만든사람 id
-//
+//	@OneToMany(mappedBy="pjtCreator")
+//	private List<Project> createProjects = new Vector<>(); // pjt_만든사람 id
+
 //	@ToString.Exclude
-//	@OneToMany(mappedBy="Employee2")
-//	private List<Project> Projects2 = new Vector<>(); // 담당자 id
-//
+//	@OneToMany(mappedBy="pjtManager")
+//	private List<Project> manageProjects = new Vector<>(); // pjt_담당자 id
+
 //	@ToString.Exclude
 //	@OneToMany(mappedBy="Employee")
 //	private List<Work> Works = new Vector<>(); // 지시자
@@ -183,38 +177,38 @@ public class Employee implements Serializable {
 //
 //		return Message;
 //	} // removeMessage
+
+	
+//	public Project addCreateProjects(Project createProjects) {
+//		getCreateProjects().add(createProjects);
+//		createProjects.setPjtCreator(this);
 //
-//	
-//	public Project addProjects1(Project Projects1) {
-//		getProjects1().add(Projects1);
-//		Projects1.setEmployee1(this);
+//		return createProjects;
+//	} // addCreateProjects
 //
-//		return Projects1;
-//	} // addProjects1
+//	public Project removeCreateProjects(Project createProjects) {
+//		getCreateProjects().remove(createProjects);
+//		createProjects.setPjtCreator(null);
 //
-//	public Project removeProjects1(Project Projects1) {
-//		getProjects1().remove(Projects1);
-//		Projects1.setEmployee1(null);
-//
-//		return Projects1;
-//	} // removeProjects1
-//
-//
-//	public Project addProjects2(Project Projects2) {
-//		getProjects2().add(Projects2);
-//		Projects2.setEmployee2(this);
-//
-//		return Projects2;
-//	} // addProjects2
-//
-//	public Project removeProjects2(Project Projects2) {
-//		getProjects2().remove(Projects2);
-//		Projects2.setEmployee2(null);
-//
-//		return Projects2;
-//	} // removeProjects2
+//		return createProjects;
+//	} // removeCreateProjects
 //
 //
+//	public Project addManageProjects(Project manageProjects) {
+//		getManageProjects().add(manageProjects);
+//		manageProjects.setPjtManager(this);
+//
+//		return manageProjects;
+//	} // addManageProjects
+//
+//	public Project removeManageProjects(Project manageProjects) {
+//		getManageProjects().remove(manageProjects);
+//		manageProjects.setPjtManager(null);
+//
+//		return manageProjects;
+//	} // removeManageProjects
+
+
 //	public Work addWork(Work Work) {
 //		getWorks().add(Work);
 //		Work.setEmployee(this);
