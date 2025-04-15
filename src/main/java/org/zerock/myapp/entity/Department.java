@@ -17,6 +17,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -36,11 +37,12 @@ public class Department implements Serializable {
 	@Serial private static final long serialVersionUID = 1L;
 
 	//1. pk
-	@Id @GeneratedValue(strategy = GenerationType.AUTO)
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "ko")
+ 	@SequenceGenerator(name = "ko", sequenceName = "T_DEPARTMENT_SEQ", initialValue = 1, allocationSize = 1)
 	@Column(name = "ID", unique=true, nullable=false)
 	private Long id; // 부서 id
 
-	@Column(nullable=false)
+	@Column(nullable=false, length = 255)
 	private String name; // 부서명
 
 	@Column(nullable=false)
@@ -52,11 +54,11 @@ public class Department implements Serializable {
 
 	
 	@CurrentTimestamp(event = EventType.INSERT, source = SourceType.DB)
-	@Column(name="CRT_DATE", nullable = false)
+	@Column(nullable = false)
 	private Date crtDate;
 
 	@CurrentTimestamp(event = EventType.UPDATE, source = SourceType.DB)
-	@Column(name="UDT_DATE")
+	@Column
 	private Date udtDate;
 	
 	@Column(name="P_DEPT_ID")
