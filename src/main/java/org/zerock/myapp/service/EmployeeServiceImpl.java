@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.zerock.myapp.domain.EmployeeDTO;
@@ -14,7 +16,6 @@ import org.zerock.myapp.entity.Department;
 import org.zerock.myapp.entity.Employee;
 import org.zerock.myapp.persistence.DepartmentRepository;
 import org.zerock.myapp.persistence.EmployeeRepository;
-import org.zerock.myapp.util.DateTimeUtils;
 
 import jakarta.annotation.PostConstruct;
 import lombok.NoArgsConstructor;
@@ -40,38 +41,37 @@ public class EmployeeServiceImpl implements EmployeeService {
 	
 
 	@Override
-	public List<Employee> getAllList() {	//검색 없는 전체 리스트
+	public Page<Employee> getSearchList(EmployeeDTO dto, Pageable pageable) {
+	    log.debug("EmployeeServiceImpl -- getSearchList({})", dto);
+
+	    String field = dto.getSearchWord();
+	    String keyword = dto.getSearchText();
+
+	    if (field == null || keyword == null || keyword.isBlank()) {
+	        return dao.findAll(pageable); // 아무것도 없으면 전체 반환
+	    }
+
+	    switch (field) {
+	        case "name":
+	            return dao.findByNameContainingAndEnabledTrue(keyword,pageable);
+	        case "tel":
+	            return dao.findByTelContainingAndEnabledTrue(keyword,pageable);
+
+	        default:
+	            return dao.findAll(pageable);
+	    }
+	}
+
+
+	@Override
+	public Page<Employee> getAllList(Pageable pageable) {	//검색 없는 전체 리스트
 		log.debug("EmployeeServiceImpl -- getAllList() invoked");
 		
-		List<Employee> list = dao.findAll();
+		Page<Employee> list = dao.findAll(pageable);
 		
 		
 		return list;
 	} // getAllList
-	
-	
-	   @Override
-	   public List<Employee> getSearchList(EmployeeDTO dto) {
-	       log.debug("EmployeeServiceImpl -- getSearchList({})", dto);
-
-	       String field = dto.getSearchWord();
-	       String keyword = dto.getSearchText();
-
-	       if (field == null || keyword == null || keyword.isBlank()) {
-	           return dao.findAll(); // 아무것도 없으면 전체 반환
-	       }
-
-	       // 간단한 switch 처리 (실제론 Specification으로 해도 좋음)
-	       switch (field) {
-	           case "name":
-	               return dao.findByNameContainingAndEnabledTrue(keyword);
-	           case "tel":
-	               return dao.findByTelContainingAndEnabledTrue(keyword);
-
-	           default:
-	               return dao.findAll();
-	       }
-	   }
 	
 	
 	   @Override

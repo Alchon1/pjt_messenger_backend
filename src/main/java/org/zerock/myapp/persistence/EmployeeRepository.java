@@ -3,6 +3,8 @@ package org.zerock.myapp.persistence;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
@@ -29,6 +31,6 @@ public interface EmployeeRepository extends JpaRepository<Employee, String>, Jpa
 
 	List<Employee> findByEnabledAndPositionInOrderByPositionAscCrtDateDesc(Boolean enabled, Integer[] positions);
 
-	List<Employee> findByNameContainingAndEnabledTrue(String name);
-	List<Employee> findByTelContainingAndEnabledTrue(String tel);
+	Page<Employee> findByNameContainingAndEnabledTrue(String name, Pageable pageable);
+	Page<Employee> findByTelContainingAndEnabledTrue(String tel, Pageable pageable);
 } // end interface

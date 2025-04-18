@@ -3,6 +3,10 @@ package org.zerock.myapp.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,23 +39,26 @@ public class EmployeeController {
 	EmployeeService service;
 
 	@GetMapping
-	public List<Employee> list() { // 리스트
-		log.debug("list() invoked.");
+	public ResponseEntity<Page<Employee>> getAllEmployees(
+			@RequestParam(name = "currPage", required = false, defaultValue = "0") Integer currPage, // 페이지 시작 값은 0부터
+			@RequestParam(name = "pageSize", required = false, defaultValue = "10") Integer pageSize // 기본 페이지 사이즈 10
 
-		List<Employee> list = service.getAllList();
-
-		return list;
-	} // list
-
+	) {
+		Pageable Pageable = PageRequest.of(currPage, pageSize, Sort.by("empno").descending());
+		Page<Employee> list = service.getAllList(Pageable);
+	    return ResponseEntity.ok(list);
+	}
+	
 	@GetMapping("/search")
-	public ResponseEntity<List<Employee>> searchEmployees(@RequestParam String searchWord,
-			@RequestParam String searchText) {
-		EmployeeDTO dto = new EmployeeDTO();
-		dto.setSearchWord(searchWord);
-		dto.setSearchText(searchText);
+	public ResponseEntity<Page<Employee>> searchEmployees(
+	        @ModelAttribute EmployeeDTO dto,
+			@RequestParam(name = "currPage", required = false, defaultValue = "0") Integer currPage, // 페이지 시작 값은 0부터
+			@RequestParam(name = "pageSize", required = false, defaultValue = "10") Integer pageSize // 기본 페이지 사이즈 10
 
-		List<Employee> result = service.getSearchList(dto);
-		return ResponseEntity.ok(result);
+	) {
+		Pageable Pageable = PageRequest.of(currPage, pageSize, Sort.by("empno").descending());
+	    Page<Employee> result = service.getSearchList(dto, Pageable);
+	    return ResponseEntity.ok(result);
 	}
 
 	@GetMapping("/selectlist")
