@@ -1,8 +1,6 @@
 package org.zerock.myapp.service;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.Vector;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -10,10 +8,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.zerock.myapp.domain.BoardDTO;
 import org.zerock.myapp.entity.Board;
-import org.zerock.myapp.entity.Project;
 import org.zerock.myapp.exception.ServiceException;
 import org.zerock.myapp.persistence.BoardRepository;
-import org.zerock.myapp.util.DateTimeUtils;
 
 import jakarta.annotation.PostConstruct;
 import lombok.NoArgsConstructor;

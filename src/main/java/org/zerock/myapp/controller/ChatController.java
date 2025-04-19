@@ -45,12 +45,12 @@ public class ChatController {
 		return result;
 	} // list
 	
-//	@GetMapping
-//	Optional<Chat> myList() { // 리스트
-//		log.debug("list() invoked.");
-//		
-//		return this.chatService.findMyList();
-//	} // list
+	@GetMapping(path = "/list/{empno}")
+	List<Chat> myList(@PathVariable String empno) { // 리스트
+		log.debug("list() invoked.");
+		
+		return this.chatService.findMyList(empno);
+	} // list
 	
 	@PostMapping
 	Boolean register(@ModelAttribute ChatDTO dto, @RequestParam String empno) { // 등록 처리

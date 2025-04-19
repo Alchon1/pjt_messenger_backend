@@ -1,7 +1,5 @@
 package org.zerock.myapp.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
@@ -19,9 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.zerock.myapp.domain.BoardDTO;
-import org.zerock.myapp.domain.ProjectDTO;
 import org.zerock.myapp.entity.Board;
-import org.zerock.myapp.entity.Project;
 import org.zerock.myapp.exception.ServiceException;
 import org.zerock.myapp.service.BoardService;
 
@@ -38,7 +34,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @RequestMapping("/board/Notice")
 @RestController
-public class NoticeboardController {
+public class NoticeBoardController {
 	
 	@Autowired  
 	@Qualifier("NoticeBoardService")
@@ -62,8 +58,8 @@ public class NoticeboardController {
 		return list;
 	} // list
 	
-	@PostMapping("/register")
-	public Board register(BoardDTO dto) { // 등록 처리
+	@PostMapping("/create")
+	public Board create(BoardDTO dto) { // 등록 처리
 		log.debug("register() invoked.");
 		
 		return service.create(dto);

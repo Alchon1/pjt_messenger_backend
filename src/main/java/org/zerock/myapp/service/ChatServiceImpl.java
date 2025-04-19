@@ -46,15 +46,25 @@ public class ChatServiceImpl implements ChatService {
     }//postConstruct
 
 
-//	@Override
-//	public Optional<Chat> findMyList() {	//로그인한 사원이 속한 채팅방 리스트
-//		log.debug("ChatServiceImpl -- getAllList() invoked");
-//		
-//		Optional<Chat> chatList = this.chatRepository.findById(emp.getChat().getId());
-//		
-//		return chatList;
-//
-//	} // getAllList
+	@Override
+	public List<Chat> findMyList(String empno) {	//로그인한 사원이 속한 채팅방 리스트
+		log.debug("ChatServiceImpl -- getAllList() invoked");
+		
+		List<ChatEmployee> myChatList = 
+				this.chatEmployeeRepository.findByEnabledAndIdEmpno(true, empno);
+		
+		List<Chat> chatList = new Vector<>();
+		
+		for (ChatEmployee chatEmployee : myChatList) {
+	        Chat chat = chatEmployee.getChat();
+	        if (chat.getEnabled()) { // 채팅방이 활성화된 경우만
+	            chatList.add(chat);
+	        }
+	    }
+
+	    return chatList;
+
+	} // getAllList
 	
 	@Override
 	public List<Chat> findAllList() {	//검색 없는 전체 리스트
