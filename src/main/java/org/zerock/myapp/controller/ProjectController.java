@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -58,7 +59,7 @@ public class ProjectController {
 	Page<Project> listUpComing() { // 리스트
 		log.debug("listUpComing() invoked.");
 		
-		Pageable paging = PageRequest.of(0, 2, Sort.by("endDate").descending());	// Pageable 설정
+		Pageable paging = PageRequest.of(0, 2, Sort.by("endDate").ascending());	// Pageable 설정
 		Page<Project> list = this.service.getUpComingList(paging);
 		
 		return list;
@@ -77,8 +78,9 @@ public class ProjectController {
 	Project register(ProjectDTO dto) throws ServiceException, ParseException { // 등록 처리
 		log.debug("register() invoked.");
 		log.debug("dto: {}", dto);
-		
-		Project data = this.service.create(dto);		
+				
+		Project data = this.service.create(dto);
+//		Project data = null;
 		
 		return data;
 	} // register
@@ -102,10 +104,10 @@ public class ProjectController {
 	} // update
 	
 	@DeleteMapping(path = "/{id}")
-	String delete(@PathVariable Long id) throws ServiceException { // 삭제 처리
+	Project delete(@PathVariable Long id) throws ServiceException { // 삭제 처리
 		log.debug("delete({}) invoked.",id);
 		
-		String result = this.service.deleteById(id);
+		Project result = this.service.deleteById(id);
 		
 		return result;
 	} // delete

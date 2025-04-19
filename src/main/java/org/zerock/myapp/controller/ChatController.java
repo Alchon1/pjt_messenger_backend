@@ -1,7 +1,6 @@
 package org.zerock.myapp.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -54,7 +53,7 @@ public class ChatController {
 //	} // list
 	
 	@PostMapping
-	Boolean register(@ModelAttribute ChatDTO dto, String empno) { // 등록 처리
+	Boolean register(@ModelAttribute ChatDTO dto, @RequestParam String empno) { // 등록 처리
 		log.debug("register() invoked.");
 		
 		return chatService.createRoom(dto, empno);
@@ -71,12 +70,12 @@ public class ChatController {
 	
 	@PutMapping(path = "/{id}")
 	Boolean update( // 수정 처리
-			ChatDTO dto,
+			@ModelAttribute ChatDTO dto,
 			@PathVariable Long id
 			) { 
 		log.debug("update({}) invoked.",id);
 		
-		return chatService.update(dto);
+		return chatService.update(dto,id);
 	} // update
 	
 	@DeleteMapping(path = "/{id}")

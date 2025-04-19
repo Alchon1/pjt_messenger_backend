@@ -38,5 +38,7 @@ public class BoardDTO {
 	
 	private String searchWord; // 검색항목
 	private String searchText; // 검색문
+
+	private String 	authorEmpno;// 생성자 id
 	
 } // end class

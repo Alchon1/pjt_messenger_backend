@@ -29,6 +29,8 @@ public class ProjectServiceImpl implements ProjectService {
 	ProjectRepository dao;
 	@Autowired
 	EmployeeRepository empDao;
+	@Autowired 
+	JwtProvider jwt;
 
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -114,8 +116,11 @@ public class ProjectServiceImpl implements ProjectService {
 		log.debug("\t+ ProjectServiceImpl -- create({}) invoked", dto);
 
 		try {
+			dto.setCreatorEmpno("E2110002");
+						
+			
 			Project project = new Project();
-
+			
 			project.setName(dto.getName());
 			project.setStartDate(this.sdf.parse(dto.getStartDate()));
 			project.setEndDate(this.sdf.parse(dto.getEndDate()));
@@ -180,7 +185,7 @@ public class ProjectServiceImpl implements ProjectService {
 	} // update
 
 	@Override
-	public String deleteById(Long id) throws ServiceException { // 삭제 처리
+	public Project deleteById(Long id) throws ServiceException { // 삭제 처리
 		log.debug("\t+ ProjectServiceImpl -- deleteById({}) invoked", id);
 
 		try {
@@ -190,14 +195,15 @@ public class ProjectServiceImpl implements ProjectService {
 				Project project = optionalProject.get();
 				project.setEnabled(false);
 	
-				this.dao.save(project);
+				Project result = this.dao.save(project);
+				log.info("Delete success");
 	
-				return "프로젝트가 삭제되었습니다.";
+				return result;
 			} // if
 		}  catch (Exception e) {
 			throw new ServiceException("프로젝트 삭제 중 오류가 발생했습니다.", e);
-		}		
-		return "프로젝트 삭제가 실패하였습니다.";
+		}
+		return null;
 	}// deleteById
 
 }// end class

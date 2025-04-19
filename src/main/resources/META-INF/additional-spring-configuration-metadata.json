@@ -1,5 +1,12 @@
-{"properties": [{
-  "name": "runtimeOnly('com.oracle.database.jdbc",
-  "type": "java.lang.String",
-  "description": "A description for 'runtimeOnly('com.oracle.database.jdbc'"
-}]}
+{"properties": [
+  {
+    "name": "runtimeOnly('com.oracle.database.jdbc",
+    "type": "java.lang.String",
+    "description": "A description for 'runtimeOnly('com.oracle.database.jdbc'"
+  },
+  {
+    "name": "spring.servlet.multipart.charset",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.servlet.multipart.charset'"
+  }
+]}

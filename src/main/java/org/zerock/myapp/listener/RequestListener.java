@@ -35,7 +35,8 @@ public final class RequestListener implements ServletRequestListener {
         try {
             Method getRequestIdMethod = request.getClass().getMethod("getRequestId");
             Objects.requireNonNull(getRequestIdMethod);
-
+            request.setCharacterEncoding("UTF-8");
+            
             requestId = (String) getRequestIdMethod.invoke(request);
         } catch (Exception e) {
             requestId = SpringBootVersion.getVersion();

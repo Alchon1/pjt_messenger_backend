@@ -9,6 +9,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.zerock.myapp.controller.common.JwtPrincipal;
 import org.zerock.myapp.service.JwtProvider;
 
 import com.auth0.jwt.JWT;
@@ -54,24 +55,29 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     .build()
                     .verify(token);
 
+            // JWT 토큰에서 꺼낼 정보 기입.
             String role = decodedJWT.getClaim("roles").asString();
+            String empno = decodedJWT.getClaim("empno").asString();
+            
 
             if (role == null || role.isEmpty()) {
-                System.out.println("❌ JWT에 roles 정보 없음");
+                System.out.println("JWT에 roles 정보 없음");
                 filterChain.doFilter(request, response);
                 return;
             }
 
             // 3. SecurityContext에 권한 주입
+            
+            JwtPrincipal principal = new JwtPrincipal(empno, username, role);            
             SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role);
-            Authentication auth = new UsernamePasswordAuthenticationToken(username, null, List.of(authority));
+            Authentication auth = new UsernamePasswordAuthenticationToken(principal, null, List.of(authority));
             SecurityContextHolder.getContext().setAuthentication(auth);
 
-            // ✅ 로그로 확인
-            System.out.println("✅ JWT 필터 통과: " + username + ", 권한: " + role);
+           
+            System.out.println("JWT 필터 통과: " + username + ", 권한: " + role);
 
         } catch (Exception e) {
-            System.out.println("❌ JWT 검증 실패: " + e.getMessage());
+            System.out.println("JWT 검증 실패: " + e.getMessage());
         }
 
         filterChain.doFilter(request, response);

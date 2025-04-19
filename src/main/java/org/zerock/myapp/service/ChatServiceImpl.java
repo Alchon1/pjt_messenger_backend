@@ -132,17 +132,21 @@ public class ChatServiceImpl implements ChatService {
 	} // getById
 	
 	@Override
-	public Boolean update(ChatDTO dto) {//수정 처리
+	public Boolean update(ChatDTO dto,Long id) {//수정 처리
 		log.debug("ChatServiceImpl -- update({}) invoked", dto);
 
 		try {
 			for (String empno : dto.getEmpnos()) {
 				ChatEmployee inviteEmp =
 						this.chatEmployeeRepository.findByIdChatIdAndIdEmpno(dto.getId(),empno);
-				if(!inviteEmp.getEnabled()){
-					inviteEmp.setEnabled(true);
-					this.chatEmployeeRepository.save(inviteEmp);
-				}else{
+				
+		        if (inviteEmp != null) {
+		            // 이미 존재할 경우
+		            if (!inviteEmp.getEnabled()) {
+		                inviteEmp.setEnabled(true);
+		                this.chatEmployeeRepository.save(inviteEmp);
+		            }
+		        }else{
 					ChatEmployee chatEmployee = new ChatEmployee();
 					
 			        Employee emp = this.employeeRepository.findById(empno)

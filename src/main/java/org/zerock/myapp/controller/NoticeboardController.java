@@ -4,6 +4,10 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,9 +16,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.zerock.myapp.domain.BoardDTO;
+import org.zerock.myapp.domain.ProjectDTO;
 import org.zerock.myapp.entity.Board;
+import org.zerock.myapp.entity.Project;
+import org.zerock.myapp.exception.ServiceException;
 import org.zerock.myapp.service.BoardService;
 
 import lombok.NoArgsConstructor;
@@ -22,7 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 
 
 /**
- * 게시판(공지사항 + 건의사항) Controller
+ * 게시판(공지사항) Controller
  */
 
 @Slf4j
@@ -36,11 +44,20 @@ public class NoticeboardController {
 	@Qualifier("NoticeBoardService")
 	private BoardService service;
 	
+	
 	@GetMapping
-	List<Board> list() { // 리스트
-		log.debug("list() invoked.");
+	Page<Board> list(
+			BoardDTO dto,
+			@RequestParam(name = "currPage", required = false, defaultValue = "1") Integer currPage, // 페이지 시작 값은 0부터
+			@RequestParam(name = "pageSize", required = false, defaultValue = "10") Integer pageSize // 기본 페이지 사이즈 8
+		) { // 리스트
+		log.debug("list({}) invoked.", dto);
 		
-		List<Board> list = service.getAllList(); 
+		dto.setType(1); //공지
+		
+		Pageable paging = PageRequest.of(currPage-1, pageSize, Sort.by("crtDate").descending());	// Pageable 설정
+		
+		Page<Board> list = this.service.getSearchList(dto, paging); 
 		
 		return list;
 	} // list
@@ -75,12 +92,13 @@ public class NoticeboardController {
 	} // update
 	
 	@DeleteMapping(path = "/{id}")
-	String delete( // 삭제 처리
+	Boolean delete( // 삭제 처리
 			@PathVariable Long id
-			) {
-		log.debug("delete({}) invoked.",id);
+			) throws ServiceException {
 		
-		return "delete";
+		Boolean result = this.service.deleteById(id);
+		
+		return result;
 	} // delete
 	
 

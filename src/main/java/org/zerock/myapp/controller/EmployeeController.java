@@ -62,10 +62,14 @@ public class EmployeeController {
 	}
 
 	@GetMapping("/selectlist")
-	public List<Employee> selectList() {
+	public ResponseEntity<String> getManagerAndTeamLeaderList() {
+		
+	        service.findByEnabledAndPositionInOrderByDepartment();
+	        
+	        return ResponseEntity.ok("조직도 순서에 맞춰 팀장/부서장 목록 출력 완료");
+	}
+	
 
-		return service.getPositionsList();
-	} // 팀장 + 부서장
 
 	@PostMapping("/register")
 	ResponseEntity<?> register(@ModelAttribute EmployeeDTO dto) { // 등록 처리
