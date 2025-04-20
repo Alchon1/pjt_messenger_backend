@@ -26,10 +26,7 @@ import lombok.Data;
 
 @Data
 
-//JSON 으로 변환해서 보낼때, 제외 할 항목
-@JsonIgnoreProperties({
-	"udtDate"
-})
+
 
 // 파일 엔티티
 
