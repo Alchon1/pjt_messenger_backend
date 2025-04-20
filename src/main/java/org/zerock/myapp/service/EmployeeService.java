@@ -22,6 +22,7 @@ public interface EmployeeService {
 	public abstract Boolean update(String empno, EmployeeDTO dto);    	// 수정 처리
 	public abstract Boolean deleteById(String id);// 삭제 처리
 	public abstract void findByEnabledAndPositionInOrderByDepartment();
+	List<Employee> getPositionsList();
 	
 
 	
