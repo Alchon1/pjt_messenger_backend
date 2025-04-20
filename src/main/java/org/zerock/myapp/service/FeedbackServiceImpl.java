@@ -65,7 +65,7 @@ public class FeedbackServiceImpl implements BoardService {
 					.orElseThrow(() -> new IllegalArgumentException("유효하지 않은 사원 ID입니다."));
 			
 			data.setEmployee(employee);//임시
-			data.setType(1);
+			data.setType(2);
 				
 			data.setTitle(dto.getTitle()); // 제목
 			data.setPosition(dto.getPosition());

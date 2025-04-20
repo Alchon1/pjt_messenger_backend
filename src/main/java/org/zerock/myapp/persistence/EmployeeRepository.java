@@ -29,10 +29,9 @@ public interface EmployeeRepository extends JpaRepository<Employee, String>, Jpa
 		Optional<Employee> findByEnabledAndEmpno(Boolean enabled, String empno);
 		
 		List<Employee> findByEnabledAndDepartment(Boolean b, Department entity);
-		
 		List<Employee> findByNameContainingAndEnabledTrue(String name);
 		List<Employee> findByTelContainingAndEnabledTrue(String tel);
-
+		List<Employee> findByEnabledAndDepartment_Id(Boolean enabled, Long deptId);
 
 	@Query(
 	        value = """
