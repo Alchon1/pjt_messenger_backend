@@ -19,6 +19,10 @@ import org.zerock.myapp.entity.Employee;
 
 @Repository
 public interface BoardRepository extends JpaRepository<Board, Long>, JpaSpecificationExecutor<Board> {
+	
+//	Page<Board> findByTitleContainingAndEnabledTrue(String title, Pageable pageable);
+//	Page<Board> findBoardByEmployeeName(String name, Pageable pageable);
+
 
 	//게시판 별 유효한 전체 게시물
 	public abstract Page<Board> findByEnabledAndType(Boolean enabled, Integer type, Pageable paging);

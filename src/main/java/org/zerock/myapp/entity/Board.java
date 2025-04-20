@@ -10,6 +10,7 @@ import org.hibernate.generator.EventType;
 import org.zerock.myapp.util.BooleanToIntegerConverter;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Basic;
@@ -81,6 +82,7 @@ public class Board implements Serializable {
 	// join
 	@ManyToOne
 	@JoinColumn(name="EMPNO")
+//	@JsonIgnore
 	private Employee employee; // 작성자
 
 } // end class

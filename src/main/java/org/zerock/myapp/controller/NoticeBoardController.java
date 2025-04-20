@@ -42,21 +42,39 @@ public class NoticeBoardController {
 	
 	
 	@GetMapping
-	Page<Board> list(
-			BoardDTO dto,
-			@RequestParam(name = "currPage", required = false, defaultValue = "1") Integer currPage, // 페이지 시작 값은 0부터
+	public ResponseEntity<Page<Board>> getAllBoard(
+			@RequestParam(name = "currPage", required = false, defaultValue = "0") Integer currPage, // 페이지 시작 값은 0부터
 			@RequestParam(name = "pageSize", required = false, defaultValue = "10") Integer pageSize // 기본 페이지 사이즈 8
 		) { // 리스트
-		log.debug("list({}) invoked.", dto);
+
+		Pageable paging = PageRequest.of(currPage, pageSize, Sort.by("crtDate").descending());
+		Page<Board> list = service.getAllList(paging);
 		
-		dto.setType(1); //공지
+	    return ResponseEntity.ok(list);
 		
-		Pageable paging = PageRequest.of(currPage-1, pageSize, Sort.by("crtDate").descending());	// Pageable 설정
-		
-		Page<Board> list = this.service.getSearchList(dto, paging); 
-		
-		return list;
-	} // list
+	}// list
+//		log.debug("list({}) invoked.", dto);
+//		
+//		dto.setType(1); //공지
+//		
+//		Pageable paging = PageRequest.of(currPage-1, pageSize, Sort.by("crtDate").descending());	// Pageable 설정
+//		
+//		Page<Board> list = this.service.getSearchList(dto, paging); 
+//		
+//		return list;
+//	} // list
+	
+	@GetMapping("/search")
+	public ResponseEntity<Page<Board>> searchBoards(
+	        @ModelAttribute BoardDTO dto,
+			@RequestParam(name = "currPage", required = false, defaultValue = "0") Integer currPage, // 페이지 시작 값은 0부터
+			@RequestParam(name = "pageSize", required = false, defaultValue = "10") Integer pageSize // 기본 페이지 사이즈 10
+
+	) {
+		Pageable paging = PageRequest.of(currPage, pageSize, Sort.by("crtDate").descending());
+	    Page<Board> result = service.getSearchList(dto, paging);
+	    return ResponseEntity.ok(result);
+	}//search
 	
 	@PostMapping("/create")
 	public Board create(BoardDTO dto) { // 등록 처리
@@ -64,6 +82,8 @@ public class NoticeBoardController {
 		
 		return service.create(dto);
 	} // register
+	
+	
 	
 	@GetMapping(path = "/{id}")
 	Board read( // 세부 조회

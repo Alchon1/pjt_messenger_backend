@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.zerock.myapp.domain.BoardDTO;
+import org.zerock.myapp.domain.EmployeeDTO;
 import org.zerock.myapp.entity.Board;
+import org.zerock.myapp.entity.Employee;
 import org.zerock.myapp.exception.ServiceException;
 import org.zerock.myapp.service.BoardService;
 
@@ -57,6 +59,21 @@ public class FeedBackBoardController {
 		
 		return list;
 	} // list
+	
+	
+	@GetMapping("/search")
+	public ResponseEntity<Page<Board>> searchBoards(
+	        @ModelAttribute BoardDTO dto,
+			@RequestParam(name = "currPage", required = false, defaultValue = "0") Integer currPage, // 페이지 시작 값은 0부터
+			@RequestParam(name = "pageSize", required = false, defaultValue = "10") Integer pageSize // 기본 페이지 사이즈 10
+
+	) {
+		Pageable Pageable = PageRequest.of(currPage, pageSize, Sort.by("crtDate").descending());
+	    Page<Board> result = service.getSearchList(dto, Pageable);
+	    return ResponseEntity.ok(result);
+	}
+
+	
 	
 	@PostMapping("/create")
 	public Board create(BoardDTO dto) { // 등록 처리

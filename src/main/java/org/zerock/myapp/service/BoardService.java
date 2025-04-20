@@ -4,11 +4,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.zerock.myapp.domain.BoardDTO;
 import org.zerock.myapp.entity.Board;
+import org.zerock.myapp.entity.Employee;
 import org.zerock.myapp.exception.ServiceException;
 
 public interface BoardService {
 
 
+	public abstract Page<Board> getAllList(Pageable pageable);    
 	public abstract Page<Board> getSearchList(BoardDTO dto, Pageable paging); // 전체 조회(검색)
 	
 	public abstract Board create(BoardDTO dto);    	// 생성 처리

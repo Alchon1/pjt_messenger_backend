@@ -7,7 +7,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.zerock.myapp.domain.BoardDTO;
+import org.zerock.myapp.domain.EmployeeDTO;
 import org.zerock.myapp.entity.Board;
+import org.zerock.myapp.entity.Employee;
 import org.zerock.myapp.exception.ServiceException;
 import org.zerock.myapp.persistence.BoardRepository;
 
@@ -32,27 +34,77 @@ public class NoticeBoardServiceImpl implements BoardService {
 	
 	
 	@Override
-	public Page<Board> getSearchList(BoardDTO dto, Pageable paging) {	//검색 있는 전체 리스트
-		log.debug("BoardServiceImpl -- getSearchList(()) invoked", dto);
+	public Page<Board> getAllList(Pageable paging) {	//검색 없는 전체 리스트
+		log.debug("BoardServiceImpl -- getAllList() invoked");
 		
-		if(dto.getSearchWord() != null && dto.getSearchWord().length() == 0) dto.setSearchWord(null);
-		if(dto.getSearchText() != null && dto.getSearchText().length() == 0) dto.setSearchText(null);
+		Page<Board> list = dao.findAll(paging);
+		
+		
+		return list;
+	} // getAllList
+	
+	
+	@Override
+	
+	public Page<Board> getSearchList(BoardDTO dto, Pageable paging) {
+		log.debug("BoardServiceImpl -- getSearchList(()) invoked", dto);
 
-		if (dto.getSearchText() == null) {
-			// 검색 리스트: 활성화상태(true)
-			return this.dao.findByEnabledAndType(true, dto.getType(), paging);
+	    String field = dto.getSearchWord();
+	    String keyword = dto.getSearchText();
 
-		} 
-		else if (dto.getSearchText() != null) {
-			return switch (dto.getSearchWord()) {
-			case "name" -> this.dao.findByEnabledAndTypeAndTitleContaining(true, dto.getType(), dto.getSearchText(), paging);
-			case "author" -> this.dao.findBoardByEmployeeName(true, dto.getType(), dto.getSearchText(), paging);
-			default -> throw new IllegalArgumentException("swich_1 - Invalid search word: " + dto.getSearchWord());
-			};
+	    if (field == null || keyword == null || keyword.isBlank()) {
+	        return dao.findAll(paging); // 아무것도 없으면 전체 반환
+	    }
+	    
+	    switch (field) {
+	    case "title":
+	        return dao.findByEnabledAndTypeAndTitleContaining(true, dto.getType(), keyword, paging);
 
-		}
-		return null;
-	} // getSearchList
+	    case "author":
+	        return dao.findBoardByEmployeeName(true, dto.getType(), keyword, paging);  // 👈 이게 핵심
+
+	    default:
+	        return dao.findByEnabledAndType(true, dto.getType(), paging);
+	}
+
+//	    switch (field) {
+//		case "title" : 
+////		-> this.
+//			 return dao.findByTitleContainingAndEnabledTrue(keyword,paging);
+////		return dao.findByEnabledAndTypeAndTitleContaining(true, dto.getType(), dto.getSearchText(), paging);
+//		case "author" :
+//			 return dao.findByNameContainingAndEnabledTrue(keyword,paging);
+////			return dao.findBoardByEmployeeName(true, dto.getType(), dto.getSearchText(), paging);
+////		-> this.dao.findBoardByEmployeeName(true, dto.getType(), dto.getSearchText(), paging);
+//		default :
+////			->throw new IllegalArgumentException("swich_1 - Invalid search word: " + dto.getSearchWord());
+//	         return dao.findAll(paging);
+//		}
+	    
+	}//getSearchList
+	
+//	@Override
+//	public Page<Board> getSearchList(BoardDTO dto, Pageable paging) {	//검색 있는 전체 리스트
+//		log.debug("BoardServiceImpl -- getSearchList(()) invoked", dto);
+//		
+//		if(dto.getSearchWord() != null && dto.getSearchWord().length() == 0) dto.setSearchWord(null);
+//		if(dto.getSearchText() != null && dto.getSearchText().length() == 0) dto.setSearchText(null);
+//
+//		if (dto.getSearchText() == null) {
+//			// 검색 리스트: 활성화상태(true)
+//			return this.dao.findByEnabledAndType(true, dto.getType(), paging);
+//
+//		} 
+//		else if (dto.getSearchText() != null) {
+//			return switch (dto.getSearchWord()) {
+//			case "name" -> this.dao.findByEnabledAndTypeAndTitleContaining(true, dto.getType(), dto.getSearchText(), paging);
+//			case "author" -> this.dao.findBoardByEmployeeName(true, dto.getType(), dto.getSearchText(), paging);
+//			default -> throw new IllegalArgumentException("swich_1 - Invalid search word: " + dto.getSearchWord());
+//			};
+//
+//		}
+//		return null;
+//	} // getSearchList
 	
 	@Override
 	public Board create(BoardDTO dto) {	//등록 처리
