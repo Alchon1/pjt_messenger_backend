@@ -1,9 +1,17 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project-modules id="moduleCoreId" project-version="1.5.0">
-	<wb-module deploy-name="pjt_messenger_backend">
-		<property name="context-root" value="/"/>
-		<wb-resource deploy-path="/WEB-INF/classes" source-path="src/main/resources"/>
-		<wb-resource deploy-path="/WEB-INF/classes" source-path="src/main/java"/>
-		<wb-resource deploy-path="/" source-path="src/main/webapp"/>
-	</wb-module>
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    	
+    <wb-module deploy-name="pjt_messenger_backend">
+        		
+        <property name="context-root" value="/"/>
+        		
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="src/main/resources"/>
+        		
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="src/main/java"/>
+        		
+        <wb-resource deploy-path="/" source-path="src/main/webapp"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/bin/generated-sources/annotations"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/bin/generated-test-sources/annotations"/>
+        	
+    </wb-module>
+    
 </project-modules>
