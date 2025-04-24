@@ -22,10 +22,12 @@ import org.zerock.myapp.persistence.ProjectRepository;
 
 import jakarta.annotation.PostConstruct;
 import lombok.NoArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
 
 
-@Slf4j
+//@Slf4j
+@Log4j2
 @NoArgsConstructor
 
 @Service
@@ -50,6 +52,8 @@ public class ChatServiceImpl implements ChatService {
 		
 		List<ChatEmployee> myChatList = 
 				this.chatEmployeeRepository.findChatByEmpno(true, empno);
+
+		myChatList.forEach(log::info);
 		
 	    return myChatList;
 

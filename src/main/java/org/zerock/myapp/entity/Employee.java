@@ -29,7 +29,6 @@ public class Employee implements Serializable {
 	@Serial private static final long serialVersionUID = 1L;
 
 	//1. pk
-	// 생성기 만들어야 함.
 	@Id 
 	@Column(name = "EMPNO", unique=true, nullable=false, length=255)
 	private String empno; // 사번
@@ -72,160 +71,9 @@ public class Employee implements Serializable {
 	private Date udtDate; // 수정일
 
 	
-//	// join
-//	@ToString.Exclude
-//	@OneToMany(mappedBy="Employee")
-//	private List<Board> Board = new Vector<>(); // 게시판 작성자
-//
-//	@ToString.Exclude
-//	@OneToMany(mappedBy="Employee")
-//	private List<ChatEmployee> ChatEmployees = new Vector<>(); // 채팅방을 사용하는 사원
-//
 	@ManyToOne
 	@JoinColumn(name="DEPT_ID")
 	private Department department; // 부서 ID
-//
-//	@ToString.Exclude
-//	@OneToMany(mappedBy="Employee")
-//	private List<File> Files = new Vector<>(); // 프로필사진
-//
-//	@ToString.Exclude
-//	@OneToMany(mappedBy="Employee")
-//	private List<Message> Messages = new Vector<>(); // 메시지 작성자
 
-//	@ToString.Exclude
-//	@OneToMany(mappedBy="pjtCreator")
-//	private List<Project> createProjects = new Vector<>(); // pjt_만든사람 id
-
-//	@ToString.Exclude
-//	@OneToMany(mappedBy="pjtManager")
-//	private List<Project> manageProjects = new Vector<>(); // pjt_담당자 id
-
-//	@ToString.Exclude
-//	@OneToMany(mappedBy="Employee")
-//	private List<Work> Works = new Vector<>(); // 지시자
-//
-//	@ToString.Exclude
-//	@OneToMany(mappedBy="Employee")
-//	private List<WorkEmployee> WorkEmployees = new Vector<>(); // 담당자
-//
-//
-//	public Board addBoard(Board Board) {
-//		getBoard().add(Board);
-//		Board.setEmployee(this);
-//
-//		return Board;
-//	} // addBoard
-//
-//	public Board removeBoard(Board Board) {
-//		getBoard().remove(Board);
-//		Board.setEmployee(null);
-//
-//		return Board;
-//	} // removeBoard
-//
-//
-//	public ChatEmployee addChatEmployee(ChatEmployee ChatEmployee) {
-//		getChatEmployees().add(ChatEmployee);
-//		ChatEmployee.setEmployee(this);
-//
-//		return ChatEmployee;
-//	} // addChatEmployee
-//
-//	public ChatEmployee removeChatEmployee(ChatEmployee ChatEmployee) {
-//		getChatEmployees().remove(ChatEmployee);
-//		ChatEmployee.setEmployee(null);
-//
-//		return ChatEmployee;
-//	} // removeChatEmployee
-//	
-//
-//	public File addFile(File File) {
-//		getFiles().add(File);
-//		File.setEmployee(this);
-//
-//		return File;
-//	} // addFile
-//
-//	public File removeFile(File File) {
-//		getFiles().remove(File);
-//		File.setEmployee(null);
-//
-//		return File;
-//	} // removeFile
-//
-//	public Message addMessage(Message Message) {
-//		getMessages().add(Message);
-//		Message.setEmployee(this);
-//
-//		return Message;
-//	} // addMessage
-//
-//	public Message removeMessage(Message Message) {
-//		getMessages().remove(Message);
-//		Message.setEmployee(null);
-//
-//		return Message;
-//	} // removeMessage
-
-	
-//	public Project addCreateProjects(Project createProjects) {
-//		getCreateProjects().add(createProjects);
-//		createProjects.setPjtCreator(this);
-//
-//		return createProjects;
-//	} // addCreateProjects
-//
-//	public Project removeCreateProjects(Project createProjects) {
-//		getCreateProjects().remove(createProjects);
-//		createProjects.setPjtCreator(null);
-//
-//		return createProjects;
-//	} // removeCreateProjects
-//
-//
-//	public Project addManageProjects(Project manageProjects) {
-//		getManageProjects().add(manageProjects);
-//		manageProjects.setPjtManager(this);
-//
-//		return manageProjects;
-//	} // addManageProjects
-//
-//	public Project removeManageProjects(Project manageProjects) {
-//		getManageProjects().remove(manageProjects);
-//		manageProjects.setPjtManager(null);
-//
-//		return manageProjects;
-//	} // removeManageProjects
-
-
-//	public Work addWork(Work Work) {
-//		getWorks().add(Work);
-//		Work.setEmployee(this);
-//
-//		return Work;
-//	} // addWork
-//
-//	public Work removeWork(Work Work) {
-//		getWorks().remove(Work);
-//		Work.setEmployee(null);
-//
-//		return Work;
-//	} // removeWork
-//
-//
-//	public WorkEmployee addWorkEmployee(WorkEmployee WorkEmployee) {
-//		getWorkEmployees().add(WorkEmployee);
-//		WorkEmployee.setEmployee(this);
-//
-//		return WorkEmployee;
-//	} // addWorkEmployee
-//
-//	public WorkEmployee removeWorkEmployee(WorkEmployee WorkEmployee) {
-//		getWorkEmployees().remove(WorkEmployee);
-//		WorkEmployee.setEmployee(null);
-//
-//		return WorkEmployee;
-//	} // removeWorkEmployee
 
 } // end class

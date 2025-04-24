@@ -48,6 +48,8 @@ public class ChatEmployee implements Serializable {
 	@CurrentTimestamp(event = EventType.UPDATE, source = SourceType.DB)
 	private Date udtDate; // 수정일
 
+	@Column(nullable=true, length= 5)
+	private Integer cnt; // 채팅방 안에 있는 인원 수
 	
 	// join
 	@ManyToOne

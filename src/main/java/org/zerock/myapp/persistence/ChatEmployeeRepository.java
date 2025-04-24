@@ -24,7 +24,7 @@ public interface ChatEmployeeRepository extends JpaRepository<ChatEmployee, Chat
 	public abstract ChatEmployee findByIdChatIdAndIdEmpno(Long chatId, String empno);
 	
 	final String nativeSQL_board_empname = """
-			SELECT C.*, M.CRT_DATE AS lastMsg
+			SELECT C.EMPNO, C.CHAT_ID, C.ENABLED, C.CRT_DATE, C.UDT_DATE, CHATCNT.CHATCNT AS cnt
 			FROM T_CHAT_EMPLOYEE C
 			    LEFT JOIN (
 			        SELECT CHAT.ID, 
@@ -36,6 +36,10 @@ public interface ChatEmployeeRepository extends JpaRepository<ChatEmployee, Chat
 			            LEFT JOIN T_MESSAGE MESSAGE ON CHAT.ID = MESSAGE.CHAT_ID
 			        GROUP BY CHAT.ID , CHAT.CRT_DATE
 			    ) M ON C.CHAT_ID = M.ID
+			    LEFT JOIN ( SELECT CHAT_ID, COUNT(CHAT_ID) AS CHATCNT
+									  FROM T_CHAT_EMPLOYEE
+									  WHERE ENABLED = 1
+									  GROUP BY CHAT_ID ) CHATCNT ON C.CHAT_ID = CHATCNT.CHAT_ID
 			WHERE C.ENABLED = :enabled AND C.EMPNO = :empno
 			ORDER BY M.CRT_DATE DESC
 		""";

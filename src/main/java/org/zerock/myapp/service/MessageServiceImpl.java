@@ -90,8 +90,8 @@ public class MessageServiceImpl implements MessageService {
 	  		var n = 1;
 	  		var maxTokens = 500;
 	  		
-	  		var prompt = "해당 대화에 대한 요점을 100 단어 이하로 요약해줘! 대화가 한마디도 없다면 대화내용이 없다고 말해줘" 
-	  					+ chatContent;
+	  		var prompt = "해당 대화에 대한 요점을 100 단어 이하로 요약해줘! 대화가 한마디도 없다면 대화내용이 없다고 말해줘"
+	  				+ "참고로 지금 대화는 사내 메신저 대화야!" + chatContent;
 		     
 		    var messages = List.<ChatMessage>of(   
 		             UserMessage.of(
