@@ -44,7 +44,8 @@ public class FileServiceImpl implements FileService {
         } // if
     
         String originalName = file.getOriginalFilename();
-        String extension = originalName.substring(originalName.lastIndexOf('.') + 1);
+//        String extension = originalName.substring(originalName.lastIndexOf('.') + 1);
+        String extension = "png";
         String uuidFileName = UUID.randomUUID().toString() + '.' + extension;
 
         UpFile upfile = new UpFile();
