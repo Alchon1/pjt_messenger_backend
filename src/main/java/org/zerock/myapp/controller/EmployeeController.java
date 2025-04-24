@@ -53,7 +53,7 @@ public class EmployeeController {
 		log.debug("list() invoked.");
 		log.debug("dto: {}, currPage: {}, pageSize: {}", dto, currPage, pageSize);
 		
-		Pageable paging = PageRequest.of(currPage, pageSize, Sort.by("position").descending());	// Pageable 설정
+		Pageable paging = PageRequest.of(currPage, pageSize, Sort.by("position", "empno").descending());	// Pageable 설정
 		Page<Employee> list = this.service.getSearchList(dto, paging);
 		
 		list.forEach(p -> log.info(p.toString()));
