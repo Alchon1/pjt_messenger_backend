@@ -26,7 +26,7 @@ public interface ChatEmployeeRepository extends JpaRepository<ChatEmployee, Chat
 	final String nativeSQL_board_empname = """
 			SELECT C.EMPNO, C.CHAT_ID, C.ENABLED, C.CRT_DATE, C.UDT_DATE, CHATCNT.CHATCNT AS cnt
 			FROM T_CHAT_EMPLOYEE C
-			    LEFT JOIN (
+			    LEFT JOIN ( 
 			        SELECT CHAT.ID, 
 			        CASE 
 				        WHEN MAX(MESSAGE.CRT_DATE) IS NULL THEN CHAT.CRT_DATE

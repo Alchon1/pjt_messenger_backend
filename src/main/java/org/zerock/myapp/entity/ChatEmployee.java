@@ -34,7 +34,7 @@ import lombok.Data;
 public class ChatEmployee implements Serializable {
 	@Serial private static final long serialVersionUID = 1L;
 
-	@EmbeddedId
+	@EmbeddedId // 복합키를 나타내는 어노테이션.
 	private ChatEmployeePK id; // 채팅방-사원 id
 	
 	@Convert(converter = BooleanToIntegerConverter.class)

@@ -84,6 +84,12 @@ dependencies {
 	implementation('io.github.sashirestela:simple-openai:3.19.4') {
     	exclude group: 'org.slf4j', module: 'slf4j-simple'
 	}
+	
+	// redis
+	implementation("org.springframework.boot:spring-boot-starter-data-redis")
+	implementation("org.springframework.data:spring-data-redis")
+	
+	
 }	
 
 tasks.named('test') {

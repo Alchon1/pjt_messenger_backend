@@ -10,11 +10,13 @@ import lombok.Data;
 public class TokenResponseDto {
     private String token;      // JWT 토큰 문자열
     private long expiresAt;    // 토큰 만료 시각 (Unix timestamp, 밀리초 단위)
+    private String refreshToken;
 
     // 생성자
-    public TokenResponseDto(String token, long expiresAt) {
+    public TokenResponseDto(String token, long expiresAt, String refreshToken) {
         this.token = token;
         this.expiresAt = expiresAt;
+        this.refreshToken = refreshToken;
     }
 
     // Getter 메서드
@@ -24,5 +26,10 @@ public class TokenResponseDto {
 
     public long getExpiresAt() {
         return expiresAt;
+    }
+    
+    // Getter 메서드
+    public String getRefreshToken() {
+        return refreshToken;
     }
 }

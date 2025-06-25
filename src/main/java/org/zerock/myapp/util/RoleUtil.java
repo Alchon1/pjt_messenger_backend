@@ -22,8 +22,8 @@ public class RoleUtil {
 		}
 	} // 숫자에 매핑한 역할.
 	
-    public static String getRedirectUrlByRole(String roles) {
-        switch (roles) {
+    public static String getRedirectUrlByRole(String role) {
+        switch (role) {
             case "Employee": return "/chat";
             case "TeamLeader": return "/chat";
             case "DepartmentLeader": return "/chat";

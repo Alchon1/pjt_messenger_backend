@@ -16,14 +16,7 @@ public class JwtPrincipal implements UserDetails {
 	private final String empno;
 	private final String role;
 	private final String name;
-	private final String loginId;
-	private final String password;
-	private final String tel;
-	private final String address;
-	private final Integer zipCode;
-	private final String email;
-	private final Integer position;
-	private final String department;
+	
 
 
 	// 🔐 권한 정보 반환 (Spring Security 필수)
@@ -70,7 +63,15 @@ public class JwtPrincipal implements UserDetails {
 	public String getUsername() {  // 사용자의 고유 식별자(예: empno, loginId 등)를 반환
 		return this.empno; // 또는 loginId
 	}
-	
+
+
+	@Override
+	public String getPassword() {
+		return null;
+	}
+
+
+
 }
 
 // 사용 예제

@@ -84,7 +84,7 @@ public class SecurityConfig {
 //                    })
 //                )
                 
-//                // 4) 폼 로그인 & 성공 핸들러 연결
+                // 4) 폼 로그인 & 성공 핸들러 연결
 //                .formLogin(form -> form
 //                    .loginProcessingUrl("/auth/login")           // React(또는 클라이언트)에서 POST 할 로그인 URL
 //                    .successHandler(loginSuccessUrlHandler)      // 로그인 성공 시 getRedirectUrlByRole() 호출

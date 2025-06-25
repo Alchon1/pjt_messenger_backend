@@ -53,23 +53,16 @@ protected void doFilterInternal(HttpServletRequest request,
                                    .build()
                                    .verify(token);
 
-        // 3. Subject(=username) 및 기타 클레임 추출
-        String username   = decodedJWT.getSubject();
+        // 3. Subject(=username) 및 기타 클레임 추출 ( 원하는 정보 )
+        String username   = decodedJWT.getSubject(); // 사용자를 식별할 수 있는 고유 Id
         String empno      = decodedJWT.getClaim("empno").asString();
         List<String> roles= decodedJWT.getClaim("roles").asList(String.class);
         String name       = decodedJWT.getClaim("name").asString();
-        String loginId    = decodedJWT.getClaim("loginId").asString();
-        String password   = decodedJWT.getClaim("password").asString();
-        String tel        = decodedJWT.getClaim("tel").asString();
-        String address    = decodedJWT.getClaim("address").asString();
-        Integer zipCode   = decodedJWT.getClaim("zipCode").asInt();
-        String email      = decodedJWT.getClaim("email").asString();
-        Integer position  = decodedJWT.getClaim("position").asInt();
-        String department = decodedJWT.getClaim("department").asString();
+        
 
         
         
-        if (roles == null || roles.isEmpty()) {
+        if (roles == null || roles.isEmpty()) { // role 역할이 비었을 경우
             System.out.println("JWT에 roles 정보 없음");
             filterChain.doFilter(request, response);
             return;
@@ -79,14 +72,15 @@ protected void doFilterInternal(HttpServletRequest request,
         Collection<GrantedAuthority> authorities = roles.stream()
             .map(r -> new SimpleGrantedAuthority("ROLE_" + r))
 //            .map(SimpleGrantedAuthority::new) // 있는 문자열 그대로 "employee"
-            .collect(Collectors.toList());
+            .collect(Collectors.toList()); // 리스트에 역할을 넣어 리스트 자체를 반환하는 구조.
 
         // 5. Principal 생성 및 SecurityContext에 Authentication 주입
         JwtPrincipal principal = new JwtPrincipal(
-        		empno,roles.get(0),name,loginId,password,tel,address,zipCode,email,position,department
-        );
+        		empno,roles.get(0),name);
 
         Authentication auth = new UsernamePasswordAuthenticationToken(principal, null, authorities);
+        
+        // 실질적으로 주입 되는 곳
         SecurityContextHolder.getContext().setAuthentication(auth);
 
         System.out.println("JWT 필터 통과: " + username + ", 권한: " + roles);
